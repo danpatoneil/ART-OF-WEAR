@@ -1,4 +1,4 @@
-# Project Name
+# ART OF WEAR
 
 ## Description
 [Add a brief description of your project here]
