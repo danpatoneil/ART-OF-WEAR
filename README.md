@@ -4,7 +4,7 @@
 [Add a brief description of your project here]
 
 ## Technologies Used
-- [Technology 1]
+- []
 - [Technology 2]
 - [Technology 3]
 - ...
