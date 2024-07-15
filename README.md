@@ -4,10 +4,10 @@
 [Add a brief description of your project here]
 
 ## Technologies Used
-- []
-- [Technology 2]
-- [Technology 3]
-- ...
+- [Mongoose]
+- [Express]
+- [React]
+- [Node.js]
 
 ## Screenshot
 ![Add a screenshot of your application here](screenshot.png)
