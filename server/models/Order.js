@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const LineItems = require('./LineItem')
 
 const { Schema } = mongoose;
 
@@ -9,7 +10,8 @@ const orderSchema = new Schema({
   },
   lineItems: [LineItems],
   status:{
-
+    type: String,
+    enum: ['Received', 'Shipped', 'Delivered', 'Cancelled'],
   },
 });
 

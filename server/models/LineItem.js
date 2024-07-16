@@ -6,6 +6,10 @@ const lineItemSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Design'
     },
+    item: {
+        type: String,
+        enum: ['t-shirt', 'crewneck', 'hoodie']
+    },
     cut:{
         type: String,
         enum: ['male', 'female', 'unisex']

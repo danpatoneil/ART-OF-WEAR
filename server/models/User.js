@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Order = require('./Order');
-const Design = require('./Design');
 
 const userSchema = new Schema({
   username: {
@@ -21,8 +19,18 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  orders: [Order.schema],
-  designs: [Design.schema],
+  routingNumber: {
+    type: String,
+    minlength: 9,
+    maxlength: 9,
+  },
+  accountNumber: {
+    type: String,
+    minlength: 8,
+    maxlength: 17,
+  },
+  orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
+  designs: [{ type: Schema.Types.ObjectId, ref: 'Design' }],
 });
 
 // set up pre-save middleware to create password
