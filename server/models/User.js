@@ -21,13 +21,21 @@ const userSchema = new Schema({
   },
   routingNumber: {
     type: String,
-    minlength: 9,
-    maxlength: 9,
+    validate: {
+      validator: function(v) {
+        return /^[0-9]{9}$/.test(v);
+      },
+      message: 'Routing number must be exactly 9 digits long'
+    }
   },
   accountNumber: {
     type: String,
-    minlength: 8,
-    maxlength: 17,
+    validate: {
+      validator: function(v) {
+        return /^[0-9]{8,17}$/.test(v);
+      },
+      message: 'Account number must be between 8 and 17 digits long'
+    }
   },
   orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
   designs: [{ type: Schema.Types.ObjectId, ref: 'Design' }],

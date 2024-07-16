@@ -2,7 +2,7 @@
 //resolvers can be "Queries" which are basically just get commands that can simply return data
 //or "Mutations" that can be other kinds of requests that change the database in some way (delete data, change data, add data, etc.)
 
-const { User, Design } = require("../models");
+const { User, Design, Order } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
@@ -20,6 +20,16 @@ const resolvers = {
       }
     },
     getUser: async (parent, {_id}) => {
+        const user = await User.findOne({
+            _id
+        }).populate('designs').populate('orders');
+        if(!user) throw new Error('User ID not found');
+        return user;
+    },
+    getDesign: async (parent, {_id}) => {
+        const design = await Design.findOne({_id}).populate('user');
+        if(!design) throw new Error('design ID not found');
+        return design;
 
     }
   },
@@ -72,58 +82,90 @@ const resolvers = {
         }
     },
 
-    //delete a new design
+    //remove a design from the user's designs array and set it to "hidden"
     //this route just doesn't work right now
-    deleteDesign: async (parent, { _id }, context) => {
+    hideDesign: async (parent, { _id }, context) => {
         if (context.user) {
-          //find logged in user
-          const user = await User.findOne({
-            _id: context.user._id,
-          });
-          user.designs = user.designs.filter(
-            designId => designId !== _id
+          // Remove the design ID from the user's designs array
+          await User.updateOne(
+            { _id: context.user._id },
+            { $pull: { designs: _id } }
           );
-          await user.save();
-          //find and delete design by id
-          const design = await Design.findOneAndDelete({
-            _id
-          });
 
-          return design
+          // Set the "hidden" boolean to true for the design with the specified ID
+          const design = await Design.findOneAndUpdate(
+            { _id },
+            { hidden: true },
+            { new: true }
+          );
 
-          //create new design under logged in user
-        //   const design = await Design.create({user, image});
-        //   //push new design into user's array
-        //   user.designs.push(design);
-        //   //save user
-        //   await user.save();
-        //   //return design
-        //   return design;
+          return design;
         } else {
-          throw AuthenticationError;
+          throw new AuthenticationError('User not authenticated');
         }
     },
 
-    //create a new design
-    //need to change this to work with an array of lineItems
-    createOrder: async (parent, args, context) => {
+    //create a new order, input is an array of LineItem
+    createOrder: async (parent, {input}, context) => {
         if (context.user) {
           //find logged in user
           const user = await User.findOne({
             _id: context.user._id,
           });
           //create new design under logged in user
-          const design = await Design.create({user, image});
+          const order = await Order.create({user, lineItems:input, status:'Received'});
           //push new design into user's array
-          user.designs.push(design);
+          user.orders.push(order);
           //save user
           await user.save();
           //return design
-          return design;
+          return order;
         } else {
           throw AuthenticationError;
         }
     },
+    //updates a user's username, email, and password, whichever are passed
+    updateUser: async (parent, {username, email, password}, context) => {
+        if (context.user) {
+          const user = await User.findOneAndUpdate(
+            { _id: context.user._id },
+            {username, email, password},
+            {new: true}
+        );
+          return user;
+        } else {
+          throw AuthenticationError;
+        }
+
+    },
+    //requires a routing number and an account number, sets the routing and accounting numbers of the logged in user to them
+    updateBankingInfo: async (parent, {routingNumber, accountNumber}, context) => {
+        if (context.user) {
+          const user = await User.findOneAndUpdate(
+            { _id: context.user._id },
+            {routingNumber, accountNumber},
+            {new: true, runValidators: true}
+        );
+          return user;
+        } else {
+          throw AuthenticationError;
+        }
+
+    },
+    //updates order with _id with new list of line items, or with a new status, or both
+    updateOrder: async (parent, {input, status, _id}, context) => {
+        if (context.user) {
+          const order = await Order.findOneAndUpdate(
+            { _id },
+            {lineItems: input, status},
+            {new: true, runValidators: true}
+        );
+          return order;
+        } else {
+          throw AuthenticationError;
+        }
+    },
+
   },
 };
 

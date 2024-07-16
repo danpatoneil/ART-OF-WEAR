@@ -12,6 +12,7 @@ const typeDefs = `
     user: User
     image: String
     createdAt: String
+    hidden: Boolean
   }
 
   type LineItem {
@@ -21,6 +22,17 @@ const typeDefs = `
     size: String
     color: String
     price: Float
+    quantity: Int
+  }
+
+  input LineItemInput {
+    design: ID
+    item: String
+    cut: String
+    size: String
+    color: String
+    price: Float
+    quantity: Int
   }
 
   type Order {
@@ -28,6 +40,7 @@ const typeDefs = `
     orderDate: String
     lineItems: [LineItem]
     status: String
+    totalPrice: Float
   }
 
   type Auth {
@@ -37,15 +50,19 @@ const typeDefs = `
 
   type Query {
     me: User
-    getUser: User
+    getUser(_id:ID!): User
+    getDesign(_id:ID!): Design
   }
 
   type Mutation {
     login(email:String!, password:String!): Auth
     addUser(username:String!, email:String!, password:String!): Auth
     addDesign(image:String!): Design
-    deleteDesign(image:String!): Design
-    createOrder: Order
+    hideDesign(_id:ID!): Design
+    createOrder(input:[LineItemInput]): Order
+    updateUser(username:String, email:String, password:String): User
+    updateBankingInfo(routingNumber:String!, accountNumber:String!): User
+    updateOrder(input:[LineItemInput], status:String, _id:ID!): Order
   }
 `;
 

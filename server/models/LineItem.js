@@ -1,4 +1,4 @@
-const { Schema, Types } = require('mongoose');
+const { Schema } = require('mongoose');
 
 const lineItemSchema = new Schema(
   {
@@ -26,6 +26,11 @@ const lineItemSchema = new Schema(
         type: Number,
         min: 10.00,
         max: 60.00,
+    },
+    quantity: {
+        type: Number,
+        min:1,
+        default:1
     }
   }
 );
