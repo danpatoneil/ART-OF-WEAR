@@ -1,7 +1,7 @@
 function Footer() {
   return (
     <footer>
-      <p>&copy; {new Date().getFullYear()}© ART OF WEAR 2024</p>
+      <p>&copy; © ART OF WEAR 2024</p>
     </footer>
   );
 }

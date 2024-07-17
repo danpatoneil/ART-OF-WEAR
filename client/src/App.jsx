@@ -1,6 +1,7 @@
-import Header from "./Header.jsx"
-import Footer from "./Footer.jsx"
-import Post from "./Post.jsx"
+import Header from "./components/Header.jsx"
+import Footer from "./components/Footer.jsx"
+import Post from "./components/Post.jsx"
+import home from "./pages/Home.jsx"
 
 function App() {
     return (
