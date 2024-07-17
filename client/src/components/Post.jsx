@@ -1,4 +1,4 @@
-import art from './art.jpg'; //needs to be connected to backend
+//needs to be connected to backend to display posts and user info
 
 function Post(){
     return (
