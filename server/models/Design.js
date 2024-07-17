@@ -15,6 +15,10 @@ const DesignSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
+  },
+  hidden: {
+    type: Boolean,
+    default: false
   }
 });
 
