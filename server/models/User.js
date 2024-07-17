@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Order = require('./Order');
-const Design = require('./Design');
 
 const userSchema = new Schema({
   username: {
@@ -21,8 +19,26 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  orders: [Order.schema],
-  designs: [Design.schema],
+  routingNumber: {
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /^[0-9]{9}$/.test(v);
+      },
+      message: 'Routing number must be exactly 9 digits long'
+    }
+  },
+  accountNumber: {
+    type: String,
+    validate: {
+      validator: function(v) {
+        return /^[0-9]{8,17}$/.test(v);
+      },
+      message: 'Account number must be between 8 and 17 digits long'
+    }
+  },
+  orders: [{ type: Schema.Types.ObjectId, ref: 'Order' }],
+  designs: [{ type: Schema.Types.ObjectId, ref: 'Design' }],
 });
 
 // set up pre-save middleware to create password
