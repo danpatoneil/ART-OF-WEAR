@@ -5,6 +5,14 @@
 const { User, Design, Order } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+  secure: true,
+});
+
 const resolvers = {
   //resolvers that simply return an object without any changes are queries.
   Query: {
@@ -13,25 +21,28 @@ const resolvers = {
       if (context.user) {
         const user = await User.findOne({
           _id: context.user._id,
-        }).populate('designs').populate('orders');
+        })
+          .populate("designs")
+          .populate("orders");
         return user;
       } else {
         throw AuthenticationError;
       }
     },
-    getUser: async (parent, {_id}) => {
-        const user = await User.findOne({
-            _id
-        }).populate('designs').populate('orders');
-        if(!user) throw new Error('User ID not found');
-        return user;
+    getUser: async (parent, { _id }) => {
+      const user = await User.findOne({
+        _id,
+      })
+        .populate("designs")
+        .populate("orders");
+      if (!user) throw new Error("User ID not found");
+      return user;
     },
-    getDesign: async (parent, {_id}) => {
-        const design = await Design.findOne({_id}).populate('user');
-        if(!design) throw new Error('design ID not found');
-        return design;
-
-    }
+    getDesign: async (parent, { _id }) => {
+      const design = await Design.findOne({ _id }).populate("user");
+      if (!design) throw new Error("design ID not found");
+      return design;
+    },
   },
   Mutation: {
     //log in the user denoted by the email and password
@@ -62,110 +73,133 @@ const resolvers = {
       return { token, user };
     },
 
-    //create a new design
+    //create a new design, image is a string that points to the user's image they are uploading
     addDesign: async (parent, { image }, context) => {
-        if (context.user) {
-          //find logged in user
-          const user = await User.findOne({
-            _id: context.user._id,
-          });
-          //create new design under logged in user
-          const design = await Design.create({user, image});
-          //push new design into user's array
-          user.designs.push(design);
-          //save user
-          await user.save();
-          //return design
-          return design;
-        } else {
-          throw AuthenticationError;
+      if (context.user) {
+        //find logged in user
+        const user = await User.findOne({
+          _id: context.user._id,
+        });
+        //alter file path to unix format
+        image = image.replace(/\\/g, "/");
+        //upload image to cloudinary
+        try {
+            //use cloudinary to upload the image
+            const result = await cloudinary.uploader.upload(image, {
+                use_filename: true,
+                unique_filename: false,
+                overwrite: true,
+              })
+              image = result.secure_url
+              //create new design under logged in user
+                const design = await Design.create({user, image});
+              //push new design into user's array
+                user.designs.push(design);
+              //save user
+                await user.save();
+              //return design
+                return design;
+        } catch (error) {
+            console.error(error)
         }
+      } else {
+        throw AuthenticationError;
+      }
     },
 
     //remove a design from the user's designs array and set it to "hidden"
     //this route just doesn't work right now
     hideDesign: async (parent, { _id }, context) => {
-        if (context.user) {
-          // Remove the design ID from the user's designs array
-          await User.updateOne(
-            { _id: context.user._id },
-            { $pull: { designs: _id } }
-          );
+      if (context.user) {
+        // Remove the design ID from the user's designs array
+        await User.updateOne(
+          { _id: context.user._id },
+          { $pull: { designs: _id } }
+        );
 
-          // Set the "hidden" boolean to true for the design with the specified ID
-          const design = await Design.findOneAndUpdate(
-            { _id },
-            { hidden: true },
-            { new: true }
-          );
+        // Set the "hidden" boolean to true for the design with the specified ID
+        const design = await Design.findOneAndUpdate(
+          { _id },
+          { hidden: true },
+          { new: true }
+        );
 
-          return design;
-        } else {
-          throw new AuthenticationError('User not authenticated');
-        }
+        return design;
+      } else {
+        throw new AuthenticationError("User not authenticated");
+      }
     },
 
     //create a new order, input is an array of LineItem
-    createOrder: async (parent, {input}, context) => {
-        if (context.user) {
-          //find logged in user
-          const user = await User.findOne({
-            _id: context.user._id,
-          });
-          //create new design under logged in user
-          const order = await Order.create({user, lineItems:input, status:'Received'});
-          //push new design into user's array
-          user.orders.push(order);
-          //save user
-          await user.save();
-          //return design
-          return order;
-        } else {
-          throw AuthenticationError;
-        }
+    createOrder: async (parent, { input }, context) => {
+      if (context.user) {
+        //find logged in user
+        const user = await User.findOne({
+          _id: context.user._id,
+        });
+        //create new design under logged in user
+        const order = await Order.create({
+          user,
+          lineItems: input,
+          status: "Received",
+        });
+        //push new design into user's array
+        user.orders.push(order);
+        //save user
+        await user.save();
+        //return design
+        return order;
+      } else {
+        throw AuthenticationError;
+      }
     },
     //updates a user's username, email, and password, whichever are passed
-    updateUser: async (parent, {username, email, password}, context) => {
-        if (context.user) {
-          const user = await User.findOneAndUpdate(
-            { _id: context.user._id },
-            {username, email, password},
-            {new: true}
-        );
+    updateUser: async (parent, { username, email, password }, context) => {
+      if (context.user) {
+        const user = await User.findOne({ _id: context.user._id });
+        if (username) user.username = username;
+        if (email) user.email = email;
+        if (password) user.password = password;
+        try {
+          await user.save();
           return user;
-        } else {
-          throw AuthenticationError;
+        } catch (error) {
+          console.error(error);
         }
-
+      } else {
+        throw AuthenticationError;
+      }
     },
     //requires a routing number and an account number, sets the routing and accounting numbers of the logged in user to them
-    updateBankingInfo: async (parent, {routingNumber, accountNumber}, context) => {
-        if (context.user) {
-          const user = await User.findOneAndUpdate(
-            { _id: context.user._id },
-            {routingNumber, accountNumber},
-            {new: true, runValidators: true}
+    updateBankingInfo: async (
+      parent,
+      { routingNumber, accountNumber },
+      context
+    ) => {
+      if (context.user) {
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { routingNumber, accountNumber },
+          { new: true, runValidators: true }
         );
-          return user;
-        } else {
-          throw AuthenticationError;
-        }
-
+        return user;
+      } else {
+        throw AuthenticationError;
+      }
     },
     //updates order with _id with new list of line items, or with a new status, or both
-    updateOrder: async (parent, {input, status, _id}, context) => {
-        if (context.user) {
-          const order = await Order.findOneAndUpdate(
-            { _id },
-            {lineItems: input, status},
-            {new: true, runValidators: true}
+    updateOrder: async (parent, { input, status, _id }, context) => {
+      if (context.user) {
+        const order = await Order.findOneAndUpdate(
+          { _id },
+          { lineItems: input, status },
+          { new: true, runValidators: true }
         );
-          return order;
-        } else {
-          throw AuthenticationError;
-        }
+        return order;
+      } else {
+        throw AuthenticationError;
+      }
     },
-
   },
 };
 
