@@ -1,7 +1,8 @@
+import './Footer.css';
 function Footer() {
   return (
-    <footer>
-      <p>&copy; © ART OF WEAR 2024</p>
+    <footer className="footer">
+      <button className = "new-post-button" href="/New Post">New Post</button>
     </footer>
   );
 }

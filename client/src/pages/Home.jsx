@@ -1,7 +1,8 @@
+import Post from "../components/Post";
 
 const Home = () => {
     return (
-            <p>home</p>
+            <Post/>
     );
 }
 
