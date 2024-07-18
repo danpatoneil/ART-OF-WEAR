@@ -1,7 +1,8 @@
-//need imports
 
 const Home = () => {
-    const { loading, data } = useQuery(QUERY_POSTS);
+    return (
+            <p>home</p>
+    );
 }
 
 export default Home;
