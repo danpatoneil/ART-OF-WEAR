@@ -1,37 +1,41 @@
-// pages/gallery.jsx
-import Head from 'next/head';
+import React, { useState, useEffect } from 'react';
 
-const imagesPerRow = 3;
-const imagesPerPage = 9; // 3x3 grid
+const UserArtPage = ({ match }) => {
+  const [userImages, setUserImages] = useState([]);
+  const username = match.params.username;
 
-// assume you have an array of image URLs from the user gallery page
-const imageUrls = [...]; // replace with actual image URLs
+  useEffect(() => {
+    const fetchUserArt = async () => {
+      const response = await fetch(`/api/getUserArt?username=${username}`);
+      const data = await response.json();
+      setUserImages(data.images);
+    };
 
-let currentPage = 0;
-let totalImages = imageUrls.length;
+    fetchUserArt();
+  }, [username]);
 
-function createImageElement(url) {
-  return <img src={url} alt="Gallery Image" />;
-}
+  let currentPage = 0;
+  let totalImages = userImages.length;
 
-function appendImagesToContainer() {
-  const startIndex = currentPage * imagesPerPage;
-  const endIndex = startIndex + imagesPerPage;
-  const imagesToAppend = imageUrls.slice(startIndex, endIndex);
+  function createImageElement(url) {
+    return <img src={url} alt="Gallery Image" />;
+  }
 
-  return imagesToAppend.map(createImageElement);
-}
+  function appendImagesToContainer() {
+    const startIndex = currentPage * 3;
+    const endIndex = startIndex + 3;
+    const imagesToAppend = userImages.slice(startIndex, endIndex);
 
-const GalleryPage = () => {
+    return imagesToAppend.map(createImageElement);
+  }
+
   return (
     <div>
-      <Head>
-        <title>ART of WEAR Gallery</title>
-      </Head>
+      <h1>{username}'s ART of WEAR Gallery</h1>
       <div className="gallery-container">
         {appendImagesToContainer()}
       </div>
-      <style jsx>
+      <style>
         {`
          .gallery-container {
             display: flex;
@@ -65,4 +69,4 @@ const GalleryPage = () => {
   );
 };
 
-export default GalleryPage;
+export default UserArtPage;
