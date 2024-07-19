@@ -1,8 +1,13 @@
 import Post from "../components/Post";
-
+import Headerhome from "../components/Headerhome";
+import Footer from "../components/Footer";
 const Home = () => {
     return (
-            <Post/>
+        <>
+            <Headerhome />
+            <Post />
+            <Footer />
+            </>
     );
 }
 
