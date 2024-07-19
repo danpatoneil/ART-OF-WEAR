@@ -11,7 +11,20 @@ const GalleryPage = () => {
           return (
             <div className="image-card">
               <img src={data.url} alt={data.alt} />
-              <h5>{data.alt}</h5>
+              <div className="image-id">
+                <button
+                  style={{
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    padding: 0,
+                    cursor: 'pointer',
+                    color: 'black' // Add this line to keep the text color black
+                  }}
+                  onClick={() => location.href=`user/${data.id}`}
+                >
+                  {data.alt}
+                </button>
+              </div>
             </div>
           );
         })}
