@@ -4,8 +4,9 @@
 
 const { User, Design, Order } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
-
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
 const cloudinary = require("cloudinary").v2;
+
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
@@ -29,19 +30,76 @@ const resolvers = {
         throw AuthenticationError;
       }
     },
+    //returns the most recent designs up to a limit passed into the function
+    getDesigns: async (parent, {start}) => {
+        const designs = await Design.find({ hidden: false })
+                                .sort({ createdAt: -1 })
+                                .skip(start)
+                                .limit(20);
+        return designs;
+    },
+    //returns all the designs of a single user other than the logged in user by ID
     getUser: async (parent, { _id }) => {
       const user = await User.findOne({
         _id,
       })
-        .populate("designs")
-        .populate("orders");
+        .populate("designs");
       if (!user) throw new Error("User ID not found");
       return user;
     },
+    //returns a single design by ID
     getDesign: async (parent, { _id }) => {
       const design = await Design.findOne({ _id }).populate("user");
       if (!design) throw new Error("design ID not found");
       return design;
+    },
+
+    checkout: async (parent, {items}, context) => {
+        //save cart state in session storage
+        const url = new URL(context.headers.referer).origin;
+        // eslint-disable-next-line camelcase
+        const line_items = [];
+
+        // eslint-disable-next-line no-restricted-syntax
+        for (const product of items) {
+            const design = await Design.findById(product.design);
+          const  name = `${product.item}_${product.design}`
+          const  description = `${product.item}_${product.cut}_${product.size}_${product.color}`
+          line_items.push({
+            price_data: {
+              currency: 'usd',
+              product_data: {
+                name,
+                description,
+                images: [design.image]
+              },
+              unit_amount: product.price * 100,
+            },
+            quantity: product.quantity,
+          });
+        }
+
+        try {
+            //create a new order
+            const order = await Order.create({user:context.user._id, lineItems:items})
+            //push that order onto the logged in user
+            await User.findByIdAndUpdate(context.user._id, { $push: { orders: order._id } });
+            const session = await stripe.checkout.sessions.create({
+              payment_method_types: ['card'],
+              line_items,
+              mode: 'payment',
+              success_url: `${url}/success?order_id=${url}}`,
+              cancel_url: `${url}/`,
+            });
+            //in success page, wipe cart and updateOrder(order._id, 'Received')
+            // console.log(session)
+            console.log(order)
+        return { session: session.id };
+        } catch (error) {
+            console.error(error)
+        }
+
+
     },
   },
   Mutation: {
@@ -130,29 +188,6 @@ const resolvers = {
       }
     },
 
-    //create a new order, input is an array of LineItem
-    createOrder: async (parent, { input }, context) => {
-      if (context.user) {
-        //find logged in user
-        const user = await User.findOne({
-          _id: context.user._id,
-        });
-        //create new design under logged in user
-        const order = await Order.create({
-          user,
-          lineItems: input,
-          status: "Received",
-        });
-        //push new design into user's array
-        user.orders.push(order);
-        //save user
-        await user.save();
-        //return design
-        return order;
-      } else {
-        throw AuthenticationError;
-      }
-    },
     //updates a user's username, email, and password, whichever are passed
     updateUser: async (parent, { username, email, password }, context) => {
       if (context.user) {
@@ -190,12 +225,16 @@ const resolvers = {
     //updates order with _id with new list of line items, or with a new status, or both
     updateOrder: async (parent, { input, status, _id }, context) => {
       if (context.user) {
-        const order = await Order.findOneAndUpdate(
+        //grab user
+        const order = await Order.findById(_id)
+        if(!order) throw new Error('Order not found')
+        if(order.user.toString() !== context.user._id) throw new Error("cannot alter another user's order!")
+        const updatedOrder = await Order.findOneAndUpdate(
           { _id },
           { lineItems: input, status },
           { new: true, runValidators: true }
-        );
-        return order;
+        ).populate('user');
+        return updatedOrder;
       } else {
         throw AuthenticationError;
       }
