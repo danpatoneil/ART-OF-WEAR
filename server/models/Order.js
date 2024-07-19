@@ -5,6 +5,11 @@ const totalPriceUtil = require('../utils/totalPrice')
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
+    user:
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
   orderDate: {
     type: Date,
     default: Date.now
@@ -12,7 +17,8 @@ const orderSchema = new Schema({
   lineItems: [LineItems],
   status:{
     type: String,
-    enum: ['Received', 'Shipped', 'Delivered', 'Cancelled', 'Company Error'],
+    enum: ['Pending', 'Received', 'Shipped', 'Delivered', 'Cancelled', 'Company Error'],
+    default: 'Pending'
   },
 },
 {
