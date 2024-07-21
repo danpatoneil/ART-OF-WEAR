@@ -23,8 +23,16 @@ const resolvers = {
         const user = await User.findOne({
           _id: context.user._id,
         })
-          .populate("designs")
-          .populate("orders");
+        .populate({
+          path: 'orders',
+          populate: {
+            path: 'lineItems',
+            populate: {
+              path: 'design'
+            }
+          }
+        })
+        .populate('designs');
         return user;
       } else {
         throw AuthenticationError;
