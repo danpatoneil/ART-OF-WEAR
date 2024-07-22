@@ -16,7 +16,7 @@ const typeDefs = `
   }
 
   type LineItem {
-    design: ID
+    design: Design
     item: String
     cut: String
     size: String

@@ -23,8 +23,16 @@ const resolvers = {
         const user = await User.findOne({
           _id: context.user._id,
         })
-          .populate("designs")
-          .populate("orders");
+        .populate({
+          path: 'orders',
+          populate: {
+            path: 'lineItems',
+            populate: {
+              path: 'design'
+            }
+          }
+        })
+        .populate('designs');
         return user;
       } else {
         throw AuthenticationError;
@@ -133,22 +141,13 @@ const resolvers = {
 
     //create a new design, image is a string that points to the user's image they are uploading
     addDesign: async (parent, { image }, context) => {
+        console.log(image)
       if (context.user) {
         //find logged in user
         const user = await User.findOne({
           _id: context.user._id,
         });
-        //alter file path to unix format
-        image = image.replace(/\\/g, "/");
-        //upload image to cloudinary
         try {
-            //use cloudinary to upload the image
-            const result = await cloudinary.uploader.upload(image, {
-                use_filename: true,
-                unique_filename: false,
-                overwrite: true,
-              })
-              image = result.secure_url
               //create new design under logged in user
                 const design = await Design.create({user, image});
               //push new design into user's array
