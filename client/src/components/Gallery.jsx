@@ -1,5 +1,8 @@
 import dummydata from "../utils/image-seeds";
 
+// import { GET_DESIGN_LIST } from "../utils/queries";
+// import { useQuery } from "@apollo/client";
+
 console.log("Dummy data:", dummydata);
 
 const GalleryPage = () => {
@@ -9,7 +12,7 @@ const GalleryPage = () => {
         <h1>Gallery</h1>
         {dummydata.map((data) => {
           return (
-            <div className="image-card">
+            <div className="image-card" key={data.id}>
               <img src={data.url} alt={data.alt} />
               <div className="image-id">
                 <button
