@@ -6,4 +6,4 @@ const ForeignProfile = () => {
     )
 }
 
-export default Foreign;
+export default ForeignProfile;

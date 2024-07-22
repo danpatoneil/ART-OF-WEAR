@@ -7,8 +7,9 @@ import {
     createHttpLink,
    } from '@apollo/client';
    import { setContext } from '@apollo/client/link/context';
-// import Header from "./components/Header.jsx"
-// import Footer from "./components/Footer.jsx"
+import Footer from "./components/Footer.jsx"
+import Header from './components/Header.jsx';
+import Headerhome from './components/Headerhome.jsx';
 // import Home from "./pages/Home.jsx"
 
 const httpLink = createHttpLink({
@@ -30,11 +31,14 @@ const httpLink = createHttpLink({
     cache: new InMemoryCache(),
   });
 
+  const userLoggedIn = false;
 const App = () => {
     return (
         <div>
             <ApolloProvider client={client}>
+                {userLoggedIn? (<Headerhome />) : (<Header/>)}
                 <Outlet />
+                <Footer />
             </ApolloProvider>
         </div>
     );
