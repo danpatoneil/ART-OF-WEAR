@@ -6,6 +6,8 @@ import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
 import Register from './pages/SignUp/Register.jsx';
 import Upload from './pages/Upload.jsx';
+import Cart from './pages/Cart/Cart.jsx';
+import Shirts from './pages/Shirts/Shirts.jsx';
 // import User from './pages/User.jsx'
 const router = createBrowserRouter([
     {
@@ -25,6 +27,12 @@ const router = createBrowserRouter([
         }, {
             path: '/Upload',
             element: <Upload />
+          },{
+            path: '/Shirts/:id',
+            element: <Shirts />
+          },{
+            path: '/Cart',
+            element: <Cart />
           },
 
       ],
