@@ -15,7 +15,7 @@ const Shirts = () => {
     size:'XS',
     cut:'male',
     color: 'black',
-    type: 't-shirt'
+    type: 'tshirt'
   })
 
 
@@ -70,7 +70,7 @@ const Shirts = () => {
             </select>
             <label htmlFor="type">type</label>
             <select name="type" id="typeSelect" value={formData.type} onChange={handleFormChange}>
-              <option value="t-shirt">T-shirt</option>
+              <option value="tshirt">T-shirt</option>
               <option value="crewneck">Crewneck</option>
               <option value="sweatshirt">Sweatshirt</option>
             </select>

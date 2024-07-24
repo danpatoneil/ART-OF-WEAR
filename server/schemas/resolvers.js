@@ -63,6 +63,7 @@ const resolvers = {
     },
 
     checkout: async (parent, {items}, context) => {
+        console.log('checkout route success')
         //save cart state in session storage
         const url = new URL(context.headers.referer).origin;
         // eslint-disable-next-line camelcase

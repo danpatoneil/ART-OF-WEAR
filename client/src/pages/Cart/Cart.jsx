@@ -4,20 +4,36 @@ import { useLazyQuery } from "@apollo/client";
 import { useEffect, useState } from "react";
 import { priceCheck } from "../../utils/helpers";
 
+const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+
 const Cart = () => {
   const [checkout, { data }] = useLazyQuery(CHECKOUT);
-  const [cart, setCart] = useState(JSON.parse(sessionStorage.getItem("cart")) || [])
+  const [cart, setCart] = useState(
+    JSON.parse(sessionStorage.getItem("cart")) || []
+  );
+  useEffect(() => {
+    if(data) {
+        stripePromise.then((res) => {
+            res.redirectToCheckout({sessionId: data.checkout.session})
+        }).catch(error => {
+            console.error(error)
+        })
+    }
+  }, [data])
   const removeFromCart = (e) => {
     // console.log(e.target.getAttribute("data-index"))
     const index = e.target.getAttribute("data-index");
     //remove item from cart, save cart
-    const cartArray = cart;
-    cartArray.splice(index, 1);
-    setCart(cartArray);
+    // Create a new array with the item removed
+    const updatedCart = cart.filter((item, i) => i !== parseInt(index));
+
+    setCart(updatedCart);
   };
   const submitCheckout = () => {
+    console.log('checkout Begins')
+    console.log(cart)
     checkout({
-      variables: { items: JSON.parse(sessionStorage.getItem("cart")) },
+      variables: { items: cart },
     });
   };
   return (
@@ -32,7 +48,9 @@ const Cart = () => {
               <p>{item.type}</p>
               <img src={item.image} />
               <p>Price: ${priceCheck(item.type)}</p>
-              <button data-index={index} onClick={removeFromCart}>Delete</button>
+              <button data-index={index} onClick={removeFromCart}>
+                Delete
+              </button>
             </div>
           ))}
           <button onClick={submitCheckout}>Checkout</button>
