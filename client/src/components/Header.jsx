@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Header(){
     return (
         <header className = "home-header">
-                <h1>ART OF WEAR</h1>
+                <h1 className ="header-h1">ART OF WEAR </h1>
             <nav>   
                 <ul className = "header-ul">
                 <li>
