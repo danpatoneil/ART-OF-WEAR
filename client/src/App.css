@@ -1,10 +1,100 @@
 html{
-    background-color: #f4efef;
-    opacity: 1;
-    background-image:  linear-gradient(30deg, #ffffff 12%, transparent 12.5%, transparent 87%, #ffffff 87.5%, #ffffff), linear-gradient(150deg, #ffffff 12%, transparent 12.5%, transparent 87%, #ffffff 87.5%, #ffffff), linear-gradient(30deg, #ffffff 12%, transparent 12.5%, transparent 87%, #ffffff 87.5%, #ffffff), linear-gradient(150deg, #ffffff 12%, transparent 12.5%, transparent 87%, #ffffff 87.5%, #ffffff), linear-gradient(60deg, #ffffff77 25%, transparent 25.5%, transparent 75%, #ffffff77 75%, #ffffff77), linear-gradient(60deg, #ffffff77 25%, transparent 25.5%, transparent 75%, #ffffff77 75%, #ffffff77);
-    background-size: 54px 95px;
-    background-position: 0 0, 0 0, 27px 47px, 27px 47px, 0 0, 27px 47px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
+    color:#fff;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+
+/* }
+
+    #circle {
+    z-index:0;
+        top:0;
+      left:0;
+      right:0;
+      margin:auto;
+      position: relative;
+      top: 0;
+       left: 0;
+       background: radial-gradient(#76f5ab 3px, transparent 5px, #230e25 7px, transparent 9px, #0B853D 11px, transparent 13px,  15px, transparent 17px, #130818 19px, transparent 21px, #356e5b 23px, transparent 25px, #c6116b 27px, transparent 29px, #000 31px, transparent 33px);
+      background-size: 30px 30px;
+    }
+
+    .a {
+        z-index: 0;
+        width: 95vw;
+        height: 95vh;
+        top:0;
+       -webkit-animation: adjustHue 1s alternate infinite;
+    }
+         
+    @-webkit-keyframes adjustHue {
+       0% { -webkit-filter: hue-rotate(30deg); }
+       50% { -webkit-filter: hue-rotate(60deg); }
+       100% { -webkit-filter: hue-rotate(90deg); }   
+    }
+    @-webkit-keyframes loading {
+      to { -webkit-transform: rotate(360deg); }
+    }
+    @-moz-keyframes loading {
+        to { -moz-transform: rotate(360deg); }
+    }
+    @-ms-keyframes loading {
+        to { -ms-transform: rotate(360deg); }
+    }
+    @keyframes loading {
+        to { transform: rotate(360deg); }
+    }
+    #circle { 
+        z-index: 0;
+        -webkit-animation-name: blinker;
+        -webkit-animation-duration: 3s;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-iteration-count: infinite;
+        -moz-animation-name: blinker;
+        -moz-animation-duration: 3s;
+        -moz-animation-timing-function: linear;
+        -moz-animation-iteration-count: infinite;
+        animation-name: blinker;
+        animation-duration: 3s;
+        animation-timing-function: linear; 
+        animation-iteration-count: infinite; color: rgb(247, 37, 114); 
+    } 
+    
+    @-moz-keyframes blinker {
+        z-index: 0;
+        0% { opacity: 1.0; }
+        50% { opacity: 0.3; }
+        100% { opacity: 1.0; } 
+    }
+    
+    @-webkit-keyframes blinker { 
+        0% { opacity: 1.0; }
+        50% { opacity: 0.3; }
+        100% { opacity: 1.0; } 
+    } 
+    
+    @keyframes blinker { 
+        0% { opacity: 1.0; } 
+        50% { opacity: 0.3; } 
+        100% { opacity: 1.0; } 
+    }
+    .a{
+        z-index: 0;
+       background: radial-gradient(#4719ff 3px, transparent 5px, #ffb71c 7px, transparent 9px, #63db41 11px, transparent 13px,  15px, transparent 17px, #ff5bfc 19px, transparent 21px, #16fe77a7 23px, transparent 25px, #275ce2 27px, transparent 29px, #000 31px, transparent 33px);
+      background-color:#000000;
+      background-size: 32px 32px;
+      overflow:hidden;
+      margin:0px;
+     
+    } */
+    body{
+        z-index: 1;
+      overflow:hidden;
+      background:#000;
+     transform-style: preserve-3d;
+     
+      @include perspective(1000px);
+    }
+    
 
 .button{
     background: rgb(0, 0, 0);

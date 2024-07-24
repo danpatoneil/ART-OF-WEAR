@@ -1,8 +1,12 @@
 import './Footer.css';
+import { Link } from "react-router-dom";
+
 function Footer() {
   return (
     <footer className="footer">
-      <button className = "new-post-button" href="/New Post">New Post</button>
+      <li>
+        <Link className="new-post-button" to="/Upload">New Post</Link>
+      </li>
     </footer>
   );
 }
