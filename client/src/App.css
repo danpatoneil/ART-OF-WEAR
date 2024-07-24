@@ -94,7 +94,6 @@ html{
       overflow:hidden;
       background:#000000000;
      transform-style: preserve-3d;
-     
       @include perspective(1000px);
     }
     
