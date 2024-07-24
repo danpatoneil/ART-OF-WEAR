@@ -1,12 +1,15 @@
 .gallery-container{
+    z-index: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   overflow:scroll;
+  scrollbar-color: #fd2e73 #00000000;
+  scrollbar-width: thin;
     height: 100vh;
 }
 .gallery-card {
-background: rgba(0, 0, 0, 0.856);
+background: rgba(0, 0, 0, 0.773);
 border-radius: 0px;
 box-shadow: 4px 4px 3px rgb(0, 0, 0);
 backdrop-filter: blur(0px);
@@ -26,9 +29,8 @@ backdrop-filter: blur(0px);
 }
 
 .gallery-button{
-    
-background: rgba(132, 102, 255, 0.66);
-border-radius: 16px;
+background: rgba(255, 87, 162, 0.775);
+border-radius: 10px;
 box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(0px);
 -webkit-backdrop-filter: blur(0px);
