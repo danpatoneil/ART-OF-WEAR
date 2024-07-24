@@ -27,6 +27,7 @@ const typeDefs = `
 
   input LineItemInput {
     design: ID
+    image: String
     item: String
     cut: String
     size: String

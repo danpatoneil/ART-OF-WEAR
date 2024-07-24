@@ -41,6 +41,7 @@ const resolvers = {
     //returns the most recent designs up to a limit passed into the function
     getDesigns: async (parent, {start}) => {
         const designs = await Design.find({ hidden: false })
+                                .populate('user')
                                 .sort({ createdAt: -1 })
                                 .skip(start)
                                 .limit(20);
@@ -63,15 +64,13 @@ const resolvers = {
     },
 
     checkout: async (parent, {items}, context) => {
-        console.log('checkout route success')
         //save cart state in session storage
         const url = new URL(context.headers.referer).origin;
         // eslint-disable-next-line camelcase
         const line_items = [];
-
         // eslint-disable-next-line no-restricted-syntax
         for (const product of items) {
-            const design = await Design.findById(product.design);
+            // const design = await Design.findById(product.design);
           const  name = `${product.item}_${product.design}`
           const  description = `${product.item}_${product.cut}_${product.size}_${product.color}`
           line_items.push({
@@ -80,7 +79,7 @@ const resolvers = {
               product_data: {
                 name,
                 description,
-                images: [design.image]
+                images: [product.image]
               },
               unit_amount: product.price * 100,
             },
@@ -89,6 +88,7 @@ const resolvers = {
         }
 
         try {
+            // console.log("trycatch block started")
             //create a new order
             const order = await Order.create({user:context.user._id, lineItems:items})
             //push that order onto the logged in user
@@ -97,12 +97,12 @@ const resolvers = {
               payment_method_types: ['card'],
               line_items,
               mode: 'payment',
-              success_url: `${url}/success?order_id=${url}}`,
+              success_url: `${url}/success?order_id=${order._id}`,
               cancel_url: `${url}/`,
             });
             //in success page, wipe cart and updateOrder(order._id, 'Received')
             // console.log(session)
-            console.log(order)
+            // console.log(order)
         return { session: session.id };
         } catch (error) {
             console.error(error)
@@ -190,7 +190,9 @@ const resolvers = {
 
     //updates a user's username, email, and password, whichever are passed
     updateUser: async (parent, { username, email, password }, context) => {
+        console.log("username is : ", context.user.username)
       if (context.user) {
+        console.log("username is : ", context.user._id)
         const user = await User.findOne({ _id: context.user._id });
         if (username) user.username = username;
         if (email) user.email = email;

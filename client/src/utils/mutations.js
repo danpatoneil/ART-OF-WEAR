@@ -55,8 +55,8 @@ mutation UpdateBankingInfo($routingNumber: String!, $accountNumber: String!) {
 }
 `;
 export const UPDATE_ORDER = gql`
-mutation UpdateOrder($updateOrderId2: ID!, $input: [LineItemInput], $status: String) {
-  updateOrder(_id: $updateOrderId2, input: $input, status: $status) {
+mutation UpdateOrder($id: ID!, $input: [LineItemInput], $status: String) {
+  updateOrder(_id: $id, input: $input, status: $status) {
     _id
   }
 }

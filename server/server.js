@@ -4,7 +4,7 @@ const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
-require('dotenv').config({config:'../.env'});
+require('dotenv').config({config:'./.env'});
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
@@ -23,7 +23,7 @@ const startApolloServer = async () => {
   app.use(express.json());
 
   // Serve up static assets
-  app.use('/images', express.static(path.join(__dirname, '../client/images')));
+  app.use('/images', express.static(path.join(__dirname, './client/images')));
 
   app.use('/graphql', expressMiddleware(server, {
     context: authMiddleware
@@ -47,4 +47,3 @@ const startApolloServer = async () => {
 
 // Call the async function to start the server
 startApolloServer();
-
