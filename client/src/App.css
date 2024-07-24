@@ -1,104 +1,20 @@
 html{
+    overflow:scroll;
+    scrollbar-color: #ff1389f7 #00000000;
+    scrollbar-width: thin;
     color:#fff;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 
-
-/* }
-
-    #circle {
-    z-index:0;
-        top:0;
-      left:0;
-      right:0;
-      margin:auto;
-      position: relative;
-      top: 0;
-       left: 0;
-       background: radial-gradient(#76f5ab 3px, transparent 5px, #230e25 7px, transparent 9px, #0B853D 11px, transparent 13px,  15px, transparent 17px, #130818 19px, transparent 21px, #356e5b 23px, transparent 25px, #c6116b 27px, transparent 29px, #000 31px, transparent 33px);
-      background-size: 30px 30px;
-    }
-
-    .a {
-        z-index: 0;
-        width: 95vw;
-        height: 95vh;
-        top:0;
-       -webkit-animation: adjustHue 1s alternate infinite;
-    }
-         
-    @-webkit-keyframes adjustHue {
-       0% { -webkit-filter: hue-rotate(30deg); }
-       50% { -webkit-filter: hue-rotate(60deg); }
-       100% { -webkit-filter: hue-rotate(90deg); }   
-    }
-    @-webkit-keyframes loading {
-      to { -webkit-transform: rotate(360deg); }
-    }
-    @-moz-keyframes loading {
-        to { -moz-transform: rotate(360deg); }
-    }
-    @-ms-keyframes loading {
-        to { -ms-transform: rotate(360deg); }
-    }
-    @keyframes loading {
-        to { transform: rotate(360deg); }
-    }
-    #circle { 
-        z-index: 0;
-        -webkit-animation-name: blinker;
-        -webkit-animation-duration: 3s;
-        -webkit-animation-timing-function: linear;
-        -webkit-animation-iteration-count: infinite;
-        -moz-animation-name: blinker;
-        -moz-animation-duration: 3s;
-        -moz-animation-timing-function: linear;
-        -moz-animation-iteration-count: infinite;
-        animation-name: blinker;
-        animation-duration: 3s;
-        animation-timing-function: linear; 
-        animation-iteration-count: infinite; color: rgb(247, 37, 114); 
-    } 
-    
-    @-moz-keyframes blinker {
-        z-index: 0;
-        0% { opacity: 1.0; }
-        50% { opacity: 0.3; }
-        100% { opacity: 1.0; } 
-    }
-    
-    @-webkit-keyframes blinker { 
-        0% { opacity: 1.0; }
-        50% { opacity: 0.3; }
-        100% { opacity: 1.0; } 
-    } 
-    
-    @keyframes blinker { 
-        0% { opacity: 1.0; } 
-        50% { opacity: 0.3; } 
-        100% { opacity: 1.0; } 
-    }
-    .a{
-        z-index: 0;
-       background: radial-gradient(#4719ff 3px, transparent 5px, #ffb71c 7px, transparent 9px, #63db41 11px, transparent 13px,  15px, transparent 17px, #ff5bfc 19px, transparent 21px, #16fe77a7 23px, transparent 25px, #275ce2 27px, transparent 29px, #000 31px, transparent 33px);
-      background-color:#000000;
-      background-size: 32px 32px;
-      overflow:hidden;
-      margin:0px;
-     
-    } */
-    body{
-        z-index: 1;
-      overflow:hidden;
-      background:#000;
-     transform-style: preserve-3d;
-     
-      @include perspective(1000px);
-    }
-    
+   body{  
+    z-index: 1;
+     transform-style: preserve-3d; 
+     @include perspective(1000px);
+}
 
 .button{
     background: rgb(0, 0, 0);
-    border-radius: 16px;    
+    border-radius: 10px;    
     box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.649);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -106,8 +22,131 @@ html{
     color: white;
     padding: 10px 20px;
     text-align: center;
+    text-decoration: none;
     display: inline-block;
     border-radius: 5px;
     margin: 4px 2px;
     cursor: pointer;
+    transition-duration: 0.5s;
 }
+
+.button:hover{
+    background: rgb(255, 8, 120);
+    border-radius: 10px;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(0px);
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+}
+
+#root{
+    position: relative;
+    align-content:center;
+}
+
+.fore{
+    z-index: 2;
+    position: absolute;
+     top:0;
+    background: rgb(0, 0, 0);
+    border-radius: 0px;
+    box-shadow: 0 4px 3px rgba(0, 0, 0, 0.685);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+    margin: 30px;
+    align-content: center;
+}
+
+#circle {
+	width: 100vw;
+	height: 100vh;
+top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  margin:auto;
+  
+  position:absolute;
+   background: radial-gradient(#0B853D 3px, transparent 5px, #111155 7px, transparent 9px, #000000 11px, transparent 13px,  15px, transparent 17px, #29f1cc 19px, transparent 21px, #3a7680 23px, transparent 25px, #1b02fd 27px, transparent 29px, #000000 31px, transparent 33px);
+
+
+  background-size: 30px 30px;
+
+
+	
+	
+	
+}
+.a {
+   -webkit-animation: adjustHue 1s alternate infinite;
+}
+     
+@-webkit-keyframes adjustHue {
+   0% { -webkit-filter: hue-rotate(30deg); }
+   50% { -webkit-filter: hue-rotate(60deg); }
+   100% { -webkit-filter: hue-rotate(90deg); }   
+}
+@-webkit-keyframes loading {
+  to { -webkit-transform: rotate(360deg); }
+}
+@-moz-keyframes loading {
+	to { -moz-transform: rotate(360deg); }
+}
+@-ms-keyframes loading {
+	to { -ms-transform: rotate(360deg); }
+}
+@keyframes loading {
+	to { transform: rotate(360deg); }
+}
+#circle { 
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 3s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 3s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+    animation-name: blinker;
+    animation-duration: 3s;
+    animation-timing-function: linear; 
+    animation-iteration-count: infinite; color: rgb(72, 162, 126); 
+} 
+
+@-moz-keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1.0; } 
+}
+
+@-webkit-keyframes blinker { 
+    0% { opacity: 1.0; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1.0; } 
+} 
+
+@keyframes blinker { 
+    0% { opacity: 1.0; } 
+    50% { opacity: 0.3; } 
+    100% { opacity: 1.0; } 
+}
+.a{
+   background: radial-gradient(#06371a 3px, transparent 5px, #28ffad 7px, transparent 9px, #0B853D 11px, transparent 13px,  15px, transparent 17px, #000828 19px, transparent 21px, #ea00ee 23px, transparent 25px, #bae803 27px, transparent 29px, #000000 31px, transparent 33px);
+  background-color:#000000;
+  background-size: 30px 33px;
+  overflow:hidden;
+  width:100vw;
+  height:100vh;
+  margin: -5px;
+ 
+}
+body{
+  overflow:hidden;
+  background:#000;
+ transform-style: preserve-3d;
+ 
+  @include perspective(1000px);
+}
+

@@ -35,13 +35,19 @@ const httpLink = createHttpLink({
 const App = () => {
     const userLoggedIn = Auth.loggedIn()
     return (
-        <div>
+      <>
+      
+          <div className ="fore">
             <ApolloProvider client={client}>
                 {userLoggedIn? (<LoggedInHeader />) : (<Header/>)}
                 <Outlet />
                 {userLoggedIn? (<Footer />) : (<div></div>)}
             </ApolloProvider>
-        </div>
+          </div>
+        <div className="a">
+      <div id="circle">
+    </div></div>
+      </>
     );
 }
 

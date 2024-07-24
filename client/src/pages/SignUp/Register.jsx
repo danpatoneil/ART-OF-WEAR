@@ -28,9 +28,10 @@ const Register = () => {
 
     return (
         <div className="register-container">
-            <h2>Register</h2>
-            <form onSubmit={handleSubmit}>
+            <h1 className = "register-h1">Register</h1>
+            <form onSubmit={handleSubmit} className = "register-form">
                 <input
+                className = "register-input"
                     type="text"
                     name="username"
                     placeholder="Username"
@@ -38,6 +39,7 @@ const Register = () => {
                     onChange={handleChange}
                 />
                 <input
+                className = "register-input"
                     type="email"
                     name="email"
                     placeholder="Email"
@@ -45,13 +47,14 @@ const Register = () => {
                     onChange={handleChange}
                 />
                 <input
+                className = "register-input"
                     type="password"
                     name="password"
                     placeholder="Password"
                     value={formData.password}
                     onChange={handleChange}
                 />
-                <button type="submit" disabled={loading}>
+                <button className = "button" type="submit" disabled={loading}>
                     Register
                 </button>
             </form>

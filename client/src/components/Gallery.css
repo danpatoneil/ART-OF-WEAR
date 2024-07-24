@@ -1,12 +1,15 @@
 .gallery-container{
+    z-index: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   overflow:scroll;
+  scrollbar-color: #fd2e73 #00000000;
+  scrollbar-width: thin;
     height: 100vh;
 }
 .gallery-card {
-background: rgba(0, 0, 0, 0.856);
+background: rgba(0, 0, 0, 0.773);
 border-radius: 0px;
 box-shadow: 4px 4px 3px rgb(0, 0, 0);
 backdrop-filter: blur(0px);
@@ -26,13 +29,26 @@ backdrop-filter: blur(0px);
 }
 
 .gallery-button{
-    
-background: rgba(132, 102, 255, 0.66);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background: rgb(0, 0, 0);
+border-radius: 10px;
+box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 backdrop-filter: blur(0px);
 -webkit-backdrop-filter: blur(0px);
-    color: white;
+    color: rgb(236, 236, 236);
+    font-size: x-large;
+    padding: 10px 20px;
+    text-align: center;
+    display: inline-block;
+    transition-duration: 0.5s;
+}
+
+.gallery-button:hover{
+    background: rgb(211, 61, 166);
+    border-radius: 10px;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(0px);
+    color: rgb(236, 236, 236);
+    font-size: x-large;
     padding: 10px 20px;
     text-align: center;
     display: inline-block;

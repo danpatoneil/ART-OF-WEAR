@@ -1,0 +1,40 @@
+
+
+#circle {
+    z-index:1;
+      left:0;
+      right:0;
+      margin:auto;
+      position: relative;
+      top: 0;
+       left: 0;
+       background: radial-gradient(#76f5ab 3px, transparent 5px, #230e25 7px, transparent 9px, #0B853D 11px, transparent 13px,  15px, transparent 17px, #130818 19px, transparent 21px, #356e5b 23px, transparent 25px, #c6116b 27px, transparent 29px, #000 31px, transparent 33px);
+      background-size: 30px 30px;
+    }
+
+    .a {
+         top: 0;
+        z-index: 0;
+        width: 95vw;
+        height: 95vh;
+       -webkit-animation: adjustHue 1s alternate infinite;
+    }
+         
+    @-webkit-keyframes adjustHue {
+       0% { -webkit-filter: hue-rotate(30deg); }
+       50% { -webkit-filter: hue-rotate(60deg); }
+       100% { -webkit-filter: hue-rotate(90deg); }   
+    }
+    @-webkit-keyframes loading {
+      to { -webkit-transform: rotate(360deg); }
+    }
+    @-moz-keyframes loading {
+        to { -moz-transform: rotate(360deg); }
+    }
+    @-ms-keyframes loading {
+        to { -ms-transform: rotate(360deg); }
+    }
+    @keyframes loading {
+        to { transform: rotate(360deg); }
+    }
+    
