@@ -9,15 +9,16 @@ import {
    import { setContext } from '@apollo/client/link/context';
 import Footer from "./components/Footer.jsx"
 import Header from './components/Header.jsx';
-import Headerhome from './components/Headerhome.jsx';
-// import Home from "./pages/Home.jsx"
+import LoggedInHeader from './components/Headerhome.jsx';
+import Auth from './utils/auth.js'
 
 const httpLink = createHttpLink({
     uri: '/graphql',
   });
 
   const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem('id_token');
+    //get id token from sessionStorage
+    const token = sessionStorage.getItem('id_token');
     return {
       headers: {
         ...headers,
@@ -31,14 +32,14 @@ const httpLink = createHttpLink({
     cache: new InMemoryCache(),
   });
 
-  const userLoggedIn = false;
 const App = () => {
+    const userLoggedIn = Auth.loggedIn()
     return (
         <div>
             <ApolloProvider client={client}>
-                {userLoggedIn? (<Headerhome />) : (<Header/>)}
+                {userLoggedIn? (<LoggedInHeader />) : (<Header/>)}
                 <Outlet />
-                <Footer />
+                {/* <Footer /> */}
             </ApolloProvider>
         </div>
     );
