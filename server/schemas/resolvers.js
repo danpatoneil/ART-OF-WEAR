@@ -41,6 +41,7 @@ const resolvers = {
     //returns the most recent designs up to a limit passed into the function
     getDesigns: async (parent, {start}) => {
         const designs = await Design.find({ hidden: false })
+                                .populate('user')
                                 .sort({ createdAt: -1 })
                                 .skip(start)
                                 .limit(20);

@@ -47,3 +47,22 @@ const startApolloServer = async () => {
 
 // Call the async function to start the server
 startApolloServer();
+// const image_seeds = require('./utils/image-seeds.json');
+// const Design = require('./models/Design');
+// const seed = async () => {
+//     try {
+//         for (const seed of image_seeds) {
+//             const newDesign = new Design({
+//                 image: seed.url
+//             });
+//             await newDesign.save();
+//             console.log(`Created new Design with image URL: ${seed.url}`);
+//         }
+//         console.log('Seeding completed successfully.');
+//         process.exit(0); // Exit the process after seeding is done
+//     } catch (error) {
+//         console.error('Error while seeding:', error);
+//         process.exit(1); // Exit the process with an error code
+//     }
+// };
+// seed();
