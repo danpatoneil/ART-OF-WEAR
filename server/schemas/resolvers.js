@@ -64,15 +64,14 @@ const resolvers = {
     },
 
     checkout: async (parent, {items}, context) => {
-        console.log('checkout route success')
+        console.log('checkout route start')
         //save cart state in session storage
         const url = new URL(context.headers.referer).origin;
         // eslint-disable-next-line camelcase
         const line_items = [];
-
         // eslint-disable-next-line no-restricted-syntax
         for (const product of items) {
-            const design = await Design.findById(product.design);
+            // const design = await Design.findById(product.design);
           const  name = `${product.item}_${product.design}`
           const  description = `${product.item}_${product.cut}_${product.size}_${product.color}`
           line_items.push({
@@ -81,7 +80,7 @@ const resolvers = {
               product_data: {
                 name,
                 description,
-                images: [design.image]
+                images: [product.image]
               },
               unit_amount: product.price * 100,
             },
@@ -90,6 +89,7 @@ const resolvers = {
         }
 
         try {
+            console.log("trycatch block started")
             //create a new order
             const order = await Order.create({user:context.user._id, lineItems:items})
             //push that order onto the logged in user
