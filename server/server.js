@@ -4,7 +4,7 @@ const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
 const { authMiddleware } = require('./utils/auth');
-require('dotenv').config({config:'../.env'});
+require('dotenv').config({config:'./.env'});
 const { typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
 
@@ -23,17 +23,17 @@ const startApolloServer = async () => {
   app.use(express.json());
 
   // Serve up static assets
-  app.use('/images', express.static(path.join(__dirname, '../client/images')));
+  app.use('/images', express.static(path.join(__dirname, './client/images')));
 
   app.use('/graphql', expressMiddleware(server, {
     context: authMiddleware
   }));
 
   if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
+    app.use(express.static(path.join(__dirname, './client/dist')));
 
     app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+      res.sendFile(path.join(__dirname, './client/dist/index.html'));
     });
   }
 
