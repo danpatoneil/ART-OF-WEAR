@@ -79,7 +79,7 @@ import { useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_DESIGN } from "../utils/mutations"; // Import your ADD_DESIGN mutation
 
-export default function UploadWidget({onSetImageUrl}) {
+export default function UploadWidget() {
 
     const cloudinaryRef = useRef();
     const widgetRef = useRef();
