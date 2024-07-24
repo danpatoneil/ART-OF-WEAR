@@ -85,3 +85,17 @@ query Checkout($items: [LineItemInput]) {
 }
 `;
 
+export const GET_DESIGNS_OF_USER = gql`
+query GetUser($id: ID!) {
+  getUser(_id: $id) {
+    username
+    designs {
+      image
+      _id
+      createdAt
+      hidden
+    }
+  }
+}
+`;
+
