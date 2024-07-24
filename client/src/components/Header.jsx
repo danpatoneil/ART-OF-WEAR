@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 function Header(){
     return (
         <header className = "home-header">
-            <nav>
-                <h1 className = "header-h1">ART OF WEAR</h1>
+            <div className="a"><div id="circle">
+                <h1>ART OF WEAR</h1>
+            </div></div>
+            <nav>   
                 <ul className = "header-ul">
                 <li>
                         <Link className="button" to="/">Home</Link>
@@ -19,10 +21,7 @@ function Header(){
                     <li>
                         <Link className="button" to="/Cart">Cart</Link>
                     </li>
-                    <li>
-                        <h1 className="header-h1">ART OF WEAR</h1>
-                    </li>
-               
+                    
                </ul>
             </nav>
         </header>

@@ -2,7 +2,7 @@ import "./Register.css";
 
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "../../graphql/mutations";
+import { REGISTER_USER } from "../../utils/mutations";
 
 import "./Register.css";
 

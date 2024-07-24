@@ -62,3 +62,14 @@ mutation UpdateOrder($updateOrderId2: ID!, $input: [LineItemInput], $status: Str
 }
 `;
 
+export const REGISTER_USER = gql`
+  mutation register($username: String!, $email: String!, $password: String!) {
+    register(username: $username, email: $email, password: $password) {
+      token
+      user {
+        _id
+        email
+        username
+      }
+    }
+  }`;

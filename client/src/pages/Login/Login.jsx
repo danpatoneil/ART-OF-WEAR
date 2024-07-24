@@ -1,12 +1,12 @@
 import "./Login.css";
 import { useMutation } from '@apollo/client';
-import { LOGIN_MUTATION } from '../graphql/mutations';
+import { LOGIN_USER } from '../../utils/mutations';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    const [login, { loading, error }] = useMutation(LOGIN_MUTATION);
+    const [login, { loading, error }] = useMutation(LOGIN_USER);
 
     const handleLogin = async () => {
         try {
