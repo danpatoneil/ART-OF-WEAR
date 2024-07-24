@@ -1,10 +1,9 @@
 import "./Register.css";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { REGISTER_USER } from "../../graphql/mutations";
-
-import "./Register.css";
+import { ADD_USER } from "../../utils/mutations";
+import Auth from '../../utils/auth';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -13,15 +12,17 @@ const Register = () => {
         password: "",
     });
 
-    const [registerUser, { loading, error }] = useMutation(REGISTER_USER);
+    const [registerUser, { loading, error }] = useMutation(ADD_USER);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        registerUser({ variables: formData });
+        const {data} = await registerUser({ variables: formData });
+        // console.log(data.addUser.token)
+        Auth.login(data.addUser.token)
     };
 
     return (
