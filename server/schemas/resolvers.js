@@ -52,7 +52,10 @@ const resolvers = {
       const user = await User.findOne({
         _id,
       })
-        .populate("designs");
+      .populate({
+        path: "designs",
+        match: { hidden: false } // Filter designs where hidden is false
+      });
       if (!user) throw new Error("User ID not found");
       return user;
     },
