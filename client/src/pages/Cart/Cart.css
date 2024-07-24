@@ -2,3 +2,44 @@ img {
     width: 600px; /* Set the desired width */
     height: 600px; /* Set the desired height */
   }
+
+.cart-div{
+  width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow:scroll;
+    scrollbar-color: #fd2e73 #00000000;
+    scrollbar-width: thin;
+    height: 100vh;
+    padding: 10px;
+    margin: 10px;
+}
+
+.cart-card {
+  background: rgba(0, 0, 0, 0.773);
+  border-radius: 0px;
+  box-shadow: 4px 4px 3px rgb(0, 0, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  margin: 20px;
+  padding: 10px;
+  border: none;
+  overflow: hidden;
+  display: flex; /* Add flex display to stack elements vertically */
+  flex-direction: column; /* Stack elements vertically */
+}
+
+.card-p{
+  text-align: center;
+  color: white;
+  font-size: 1rem;
+}
+
+.card-h2{
+  text-align: center;
+  color: white;
+  font-size: 2rem;
+  padding: 5px;
+  margin: 20px;
+}

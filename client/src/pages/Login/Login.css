@@ -1,3 +1,36 @@
-/* overflow:scroll;
-  scrollbar-color: #fd2e73 #00000000;
-  scrollbar-width: thin; */
+.register-container{
+    justify-content: center;
+    align-items: center;
+    display: flex-box;
+    flex-direction: column;
+    margin: 35px;
+    padding: 90px;
+}
+
+.register-h1{
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 5rem;
+    color: #ffffff;
+    text-align: center;
+    margin: 20px;
+}
+
+.register-form{
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    color:#ffffff;
+    background: rgb(0, 0, 0);
+    box-shadow: 4px 4px 3px rgb(0, 0, 0);
+    backdrop-filter: blur(0px);
+    -webkit-backdrop-filter: blur(0px);
+}
+
+.register-input{
+    padding: 5px;
+    margin: 10px;
+    border-radius: 10px;
+    border-color: #ffffff;
+    background: rgb(43, 42, 42);
+    color: #ffffff;
+}

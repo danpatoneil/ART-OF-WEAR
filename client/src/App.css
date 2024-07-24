@@ -57,6 +57,7 @@ html{
     -webkit-backdrop-filter: blur(0px);
     margin: 30px;
     align-content: center;
+    width: 90%;
 }
 
 #circle {

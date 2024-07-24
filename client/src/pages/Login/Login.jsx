@@ -26,22 +26,24 @@ const Login = () => {
     };
 
     return (
-        <div>
-            <input
+        
+        <div className ="register-container">
+            <h1 className = "register-h1">Login</h1>
+            <input className = "register-input"
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
             />
-            <input
+            <input className = "register-input"
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
             />
-            <button onClick={handleLogin} disabled={loading}>
+            <button className = "button" onClick={handleLogin} disabled={loading}>
                 {loading ? 'Logging in...' : 'Login'}
-            </button>
+            </button >
             {error && <p>{error.message}</p>}
         </div>
     );

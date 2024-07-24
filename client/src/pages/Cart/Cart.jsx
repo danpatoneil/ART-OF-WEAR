@@ -49,24 +49,24 @@ const Cart = () => {
   return (
     <div>
       {cart.length ? (
-        <div>
+        <div className = "cart-div">
           {cart.map((item, index) => (
             <div key={index}>
-              <p>{item.size}</p>
-              <p>{item.cut}</p>
-              <p>{item.color}</p>
-              <p>{item.type}</p>
+              <p className ="card-p">{item.size}</p>
+              <p className ="card-p">{item.cut}</p>
+              <p className ="card-p">{item.color}</p>
+              <p className ="card-p">{item.type}</p>
               <img src={item.image} />
               <p>Price: ${priceCheck(item.type)}</p>
-              <button data-index={index} onClick={removeFromCart}>
+              <button className = "button" data-index={index} onClick={removeFromCart}>
                 Delete
               </button>
             </div>
           ))}
-          <button onClick={submitCheckout}>Checkout</button>
+          <button className = "button" onClick={submitCheckout}>Checkout</button>
         </div>
       ) : (
-        <h2>Empty Cart</h2>
+        <h2 className ="cart-h2">Cart</h2>
       )}
     </div>
   );
