@@ -2,7 +2,9 @@ import './Footer.css';
 function Footer() {
   return (
     <footer className="footer">
-      <button className = "new-post-button" href="/New Post">New Post</button>
+      <li>
+        <Link className="new-post-button" to="/Upload">New Post</Link>
+      </li>
     </footer>
   );
 }
