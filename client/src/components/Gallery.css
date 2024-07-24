@@ -6,7 +6,7 @@
   overflow:scroll;
   scrollbar-color: #fd2e73 #00000000;
   scrollbar-width: thin;
-    height: 100vh;
+    height: 70vh;
 }
 .gallery-card {
 background: rgba(0, 0, 0, 0.773);

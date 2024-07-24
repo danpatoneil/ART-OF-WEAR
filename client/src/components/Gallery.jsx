@@ -26,7 +26,7 @@ const GalleryPage = () => {
         {designs?.map((design) => {
           return (
             <div className="image-card" key={design._id}>
-              <img src={design.image} alt={design._id} />
+              <img src={design.image} alt={design._id} onClick={() => navigate(`shirts/${design._id}`)} />
               <div className="image-id">
                 <button
                   style={{
@@ -34,11 +34,11 @@ const GalleryPage = () => {
                     border: 'none',
                     padding: 0,
                     cursor: 'pointer',
-                    color: 'black'
+                    color: 'aliceblue'
                   }}
-                  onClick={() => navigate(`user/${design._id}`)}
+                  onClick={() => navigate(`user/${design.user._id}`)}
                 >
-                  {design._id}
+                  {design.user.username}
                 </button>
               </div>
             </div>

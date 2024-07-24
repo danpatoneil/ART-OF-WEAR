@@ -6,15 +6,15 @@ html{
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-   body{  
+   body{
     z-index: 1;
-     transform-style: preserve-3d; 
+     transform-style: preserve-3d;
      @include perspective(1000px);
 }
 
 .button{
     background: rgb(0, 0, 0);
-    border-radius: 10px;    
+    border-radius: 10px;
     box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.649);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -61,14 +61,14 @@ html{
 }
 
 #circle {
-	width: 100vw;
-	height: 100vh;
+	width: 70vw;
+	height: 70vh;
 top:0;
   left:0;
   right:0;
   bottom:0;
   margin:auto;
-  
+
   position:absolute;
    background: radial-gradient(#0B853D 3px, transparent 5px, #111155 7px, transparent 9px, #000000 11px, transparent 13px,  15px, transparent 17px, #29f1cc 19px, transparent 21px, #3a7680 23px, transparent 25px, #1b02fd 27px, transparent 29px, #000000 31px, transparent 33px);
 
@@ -76,18 +76,18 @@ top:0;
   background-size: 30px 30px;
 
 
-	
-	
-	
+
+
+
 }
 .a {
    -webkit-animation: adjustHue 1s alternate infinite;
 }
-     
+
 @-webkit-keyframes adjustHue {
    0% { -webkit-filter: hue-rotate(30deg); }
    50% { -webkit-filter: hue-rotate(60deg); }
-   100% { -webkit-filter: hue-rotate(90deg); }   
+   100% { -webkit-filter: hue-rotate(90deg); }
 }
 @-webkit-keyframes loading {
   to { -webkit-transform: rotate(360deg); }
@@ -101,7 +101,7 @@ top:0;
 @keyframes loading {
 	to { transform: rotate(360deg); }
 }
-#circle { 
+#circle {
     -webkit-animation-name: blinker;
     -webkit-animation-duration: 3s;
     -webkit-animation-timing-function: linear;
@@ -112,26 +112,26 @@ top:0;
     -moz-animation-iteration-count: infinite;
     animation-name: blinker;
     animation-duration: 3s;
-    animation-timing-function: linear; 
-    animation-iteration-count: infinite; color: rgb(72, 162, 126); 
-} 
+    animation-timing-function: linear;
+    animation-iteration-count: infinite; color: rgb(72, 162, 126);
+}
 
 @-moz-keyframes blinker {
     0% { opacity: 1.0; }
     50% { opacity: 0.3; }
-    100% { opacity: 1.0; } 
+    100% { opacity: 1.0; }
 }
 
-@-webkit-keyframes blinker { 
+@-webkit-keyframes blinker {
     0% { opacity: 1.0; }
     50% { opacity: 0.3; }
-    100% { opacity: 1.0; } 
-} 
+    100% { opacity: 1.0; }
+}
 
-@keyframes blinker { 
-    0% { opacity: 1.0; } 
-    50% { opacity: 0.3; } 
-    100% { opacity: 1.0; } 
+@keyframes blinker {
+    0% { opacity: 1.0; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1.0; }
 }
 .a{
    background: radial-gradient(#06371a 3px, transparent 5px, #28ffad 7px, transparent 9px, #0B853D 11px, transparent 13px,  15px, transparent 17px, #000828 19px, transparent 21px, #ea00ee 23px, transparent 25px, #bae803 27px, transparent 29px, #000000 31px, transparent 33px);
@@ -141,13 +141,13 @@ top:0;
   width:100vw;
   height:100vh;
   margin: -5px;
- 
+
 }
 body{
   overflow:hidden;
   background:#000;
  transform-style: preserve-3d;
- 
+
   @include perspective(1000px);
 }
 

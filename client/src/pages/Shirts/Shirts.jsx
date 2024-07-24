@@ -42,7 +42,7 @@ const Shirts = () => {
   }
 
   return (
-    <div>
+    <div className="body">
       {loading ? (
         <p>Loading...</p>
       ) : (
