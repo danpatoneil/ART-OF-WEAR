@@ -12,7 +12,7 @@ const Cart = () => {
     JSON.parse(sessionStorage.getItem("cart")) || []
   );
   useEffect(() => {
-    console.log(data)
+    // console.log(data)
     if(data) {
         stripePromise.then((res) => {
             res.redirectToCheckout({sessionId: data.checkout.session})
@@ -32,9 +32,17 @@ const Cart = () => {
   };
   const submitCheckout = () => {
     console.log('checkout Begins')
-    console.log(cart)
+    // console.log(cart)
+    let checkoutInput = []
+    for (const product of cart) {
+        const price = priceCheck(product.item);
+        product.price = price;
+        checkoutInput.push(product);
+    }
+    //price: priceCheck(item)
+    // console.log(checkoutInput)
     checkout({
-      variables: { items: cart },
+      variables: { items: checkoutInput },
     });
   };
   sessionStorage.setItem('cart', JSON.stringify(cart))

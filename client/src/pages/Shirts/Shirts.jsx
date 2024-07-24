@@ -15,14 +15,18 @@ const Shirts = () => {
     size:'XS',
     cut:'male',
     color: 'black',
-    type: 'tshirt'
+    item: 'tshirt',
+    quantity: 1
   })
 
 
   const handleFormChange = async (e) => {
-    // console.log(data)
+    console.log(formData)
     // console.log(id)
-    const {name, value} = e.target;
+    let {name, value} = e.target;
+    if(name=="quantity"){
+        value=parseInt(value);
+    }
     setFormData(prevFormData => ({
         ...prevFormData,
         [name]: value
@@ -32,8 +36,9 @@ const Shirts = () => {
 
 
   const handleFormSubmit = () => {
-    saveToCart({...formData, id, image:data.getDesign.image});
+    saveToCart({...formData, design:id, image:data.getDesign.image});
     //redirect to cart page
+    window.location.assign('/Cart');
   }
 
   return (
@@ -68,13 +73,15 @@ const Shirts = () => {
               <option value="red">red</option>
               <option value="blue">blue</option>
             </select>
-            <label htmlFor="type">type</label>
-            <select name="type" id="typeSelect" value={formData.type} onChange={handleFormChange}>
+            <label htmlFor="item">item</label>
+            <select name="item" id="itemSelect" value={formData.item} onChange={handleFormChange}>
               <option value="tshirt">T-shirt</option>
               <option value="crewneck">Crewneck</option>
               <option value="sweatshirt">Sweatshirt</option>
             </select>
-            <button type="button" onClick={handleFormSubmit}>Add To Cart</button>
+            <label htmlFor="quantity">quantity</label>
+            <input name="quantity" type="number" value={formData.quantity} onChange={handleFormChange} />
+            <button onClick={handleFormSubmit}>Add To Cart</button>
           </form>
         </div>
        )}
