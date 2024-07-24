@@ -8,7 +8,7 @@ const lineItemSchema = new Schema(
     },
     item: {
         type: String,
-        enum: ['t-shirt', 'crewneck', 'hoodie']
+        enum: ['tshirt', 'crewneck', 'hoodie']
     },
     cut:{
         type: String,

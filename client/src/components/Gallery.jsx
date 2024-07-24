@@ -3,6 +3,7 @@
 // // import { GET_DESIGN_LIST } from "../utils/queries";
 // // import { useQuery } from "@apollo/client";
 
+
 // console.log("Dummy data:", dummydata);
 
 // const GalleryPage = () => {
