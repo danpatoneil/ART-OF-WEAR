@@ -64,7 +64,6 @@ const resolvers = {
     },
 
     checkout: async (parent, {items}, context) => {
-        console.log('checkout route start')
         //save cart state in session storage
         const url = new URL(context.headers.referer).origin;
         // eslint-disable-next-line camelcase
@@ -89,7 +88,7 @@ const resolvers = {
         }
 
         try {
-            console.log("trycatch block started")
+            // console.log("trycatch block started")
             //create a new order
             const order = await Order.create({user:context.user._id, lineItems:items})
             //push that order onto the logged in user
@@ -98,12 +97,12 @@ const resolvers = {
               payment_method_types: ['card'],
               line_items,
               mode: 'payment',
-              success_url: `${url}/success?order_id=${url}}`,
+              success_url: `${url}/success?order_id=${order._id}`,
               cancel_url: `${url}/`,
             });
             //in success page, wipe cart and updateOrder(order._id, 'Received')
             // console.log(session)
-            console.log(order)
+            // console.log(order)
         return { session: session.id };
         } catch (error) {
             console.error(error)
@@ -191,7 +190,9 @@ const resolvers = {
 
     //updates a user's username, email, and password, whichever are passed
     updateUser: async (parent, { username, email, password }, context) => {
+        console.log("username is : ", context.user.username)
       if (context.user) {
+        console.log("username is : ", context.user._id)
         const user = await User.findOne({ _id: context.user._id });
         if (username) user.username = username;
         if (email) user.email = email;

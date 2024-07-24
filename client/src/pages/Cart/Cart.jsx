@@ -40,7 +40,7 @@ const Cart = () => {
         checkoutInput.push(product);
     }
     //price: priceCheck(item)
-    // console.log(checkoutInput)
+    console.log(checkoutInput)
     checkout({
       variables: { items: checkoutInput },
     });
