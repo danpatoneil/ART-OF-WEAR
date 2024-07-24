@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 const UserArtPage = ({ match }) => {
+
+  let { id } = useParams();
   const [userImages, setUserImages] = useState([]);
-  const username = match.params.username;
+  const username = id;
 
   useEffect(() => {
     const fetchUserArt = async () => {

@@ -8,6 +8,8 @@ import Register from './pages/SignUp/Register.jsx';
 import Upload from './pages/Upload.jsx';
 import Cart from './pages/Cart/Cart.jsx';
 import Shirts from './pages/Shirts/Shirts.jsx';
+import Success from './pages/Success/Success.jsx';
+// import OrderHistory from
 // import User from './pages/User.jsx'
 const router = createBrowserRouter([
     {
@@ -33,8 +35,10 @@ const router = createBrowserRouter([
           },{
             path: '/Cart',
             element: <Cart />
+          }, {
+            path: '/success',
+            element: <Success />
           },
-            
       ],
     },
 ]);

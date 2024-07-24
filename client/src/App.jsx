@@ -9,7 +9,7 @@ import {
    import { setContext } from '@apollo/client/link/context';
 import Footer from "./components/Footer.jsx"
 import Header from './components/Header.jsx';
-import LoggedInHeader from './components/Headerhome.jsx';
+import LoggedInHeader from './components/LoggedInHeader.jsx';
 import Auth from './utils/auth.js'
 
 const httpLink = createHttpLink({
@@ -39,7 +39,7 @@ const App = () => {
             <ApolloProvider client={client}>
                 {userLoggedIn? (<LoggedInHeader />) : (<Header/>)}
                 <Outlet />
-                {/* <Footer /> */}
+                {userLoggedIn? (<Footer />) : (<div></div>)}
             </ApolloProvider>
         </div>
     );

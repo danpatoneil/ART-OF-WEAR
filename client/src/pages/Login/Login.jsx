@@ -10,9 +10,13 @@ const Login = () => {
 
     const handleLogin = async () => {
         try {
+            console.log(email)
+            console.log(password)
             const { data } = await login({
                 variables: { email, password },
             });
+            // console.log(data.login.token)
+            Auth.login(data.login.token)
             // Handle successful login
         } catch (error) {
             // Handle login error
