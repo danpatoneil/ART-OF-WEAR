@@ -1,30 +1,28 @@
 html{
-    background-color: #ffffff;
     color:#fff;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    overflow: auto;
-    overflow:scroll;
 
-}
+
+/* }
 
     #circle {
-        z-index: 0;
-        width: 95vw;
-        height: 95vh;
-    top:0;
+    z-index:0;
+        top:0;
       left:0;
       right:0;
-      bottom:0;
       margin:auto;
-      position: absolute;
+      position: relative;
       top: 0;
-    left: 0;
+       left: 0;
        background: radial-gradient(#76f5ab 3px, transparent 5px, #230e25 7px, transparent 9px, #0B853D 11px, transparent 13px,  15px, transparent 17px, #130818 19px, transparent 21px, #356e5b 23px, transparent 25px, #c6116b 27px, transparent 29px, #000 31px, transparent 33px);
       background-size: 30px 30px;
     }
 
     .a {
         z-index: 0;
+        width: 95vw;
+        height: 95vh;
+        top:0;
        -webkit-animation: adjustHue 1s alternate infinite;
     }
          
@@ -69,14 +67,12 @@ html{
     }
     
     @-webkit-keyframes blinker { 
-        z-index: 0;
         0% { opacity: 1.0; }
         50% { opacity: 0.3; }
         100% { opacity: 1.0; } 
     } 
     
     @keyframes blinker { 
-        z-index: 0;
         0% { opacity: 1.0; } 
         50% { opacity: 0.3; } 
         100% { opacity: 1.0; } 
@@ -89,11 +85,13 @@ html{
       overflow:hidden;
       margin:0px;
      
-    }
+    } */
     body{
+        z-index: 1;
       overflow:hidden;
-      background:#000000000;
+      background:#000;
      transform-style: preserve-3d;
+     
       @include perspective(1000px);
     }
     
