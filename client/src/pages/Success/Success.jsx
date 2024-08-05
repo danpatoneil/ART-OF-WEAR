@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import "./Success.css";
 import { useMutation } from "@apollo/client";
 import { UPDATE_ORDER } from "../../utils/mutations";
 

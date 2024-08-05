@@ -1,5 +1,5 @@
 import { useQuery, useMutation } from "@apollo/client";
-import './NativeProfile.css';
+import "./NativeProfile.css";
 import { GET_USER_DESIGNS } from "../../utils/queries";
 import { HIDE_DESIGN } from "../../utils/mutations";
 
@@ -18,29 +18,31 @@ const NativeProfile = () => {
         data: {
           me: {
             ...existingDesigns.me,
-            designs: existingDesigns.me.designs.filter(design => design._id !== hideDesign._id)
-          }
-        }
+            designs: existingDesigns.me.designs.filter(
+              (design) => design._id !== hideDesign._id
+            ),
+          },
+        },
       });
-    }
+    },
   });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
   let designs;
-  if(data.me.designs) designs = data.me.designs;
+  if (data.me.designs) designs = data.me.designs;
 
   const handleDelete = async (e) => {
     const index = e.target.getAttribute("data-index");
-    const {data} = await hideDesign({variables: {id:index}})
-    console.log(data)
+    const { data } = await hideDesign({ variables: { id: index } });
+    console.log(data);
   };
   console.log("this is data: ", data.me.designs);
 
   return (
     <div>
-        <h1>{data.me.username}'s Page</h1>
-    <div className="gallery-container">
+      <h1>{data.me.username}&#39;s Page</h1>
+      <div className="gallery-container">
         {designs ? (
           designs.map((design) => (
             <li className="image-card" key={design._id}>
@@ -51,13 +53,11 @@ const NativeProfile = () => {
             </li>
           ))
         ) : (
-          <p>Looks like you don't have any designs. Why not make a post?</p>
+          <p>Looks like you don&#39;t have any designs. Why not make a post?</p>
         )}
-    </div>
+      </div>
     </div>
   );
 };
 
 export default NativeProfile;
-
-

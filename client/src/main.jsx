@@ -5,7 +5,7 @@ import App from './App.jsx';
 import Home from './pages/Home/Home.jsx';
 import Login from './pages/Login/Login.jsx';
 import Register from './pages/SignUp/Register.jsx';
-import Upload from './pages/Upload.jsx';
+import Upload from './pages/Upload/Upload.jsx';
 import Cart from './pages/Cart/Cart.jsx';
 import Shirts from './pages/Shirts/Shirts.jsx';
 import Success from './pages/Success/Success.jsx';
