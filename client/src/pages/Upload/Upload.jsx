@@ -1,5 +1,5 @@
 
-import UploadWidget from "../../components/uploadWidget"
+import UploadWidget from "../../components/UploadWidget/uploadWidget"
 
 export default function Upload() {
 
