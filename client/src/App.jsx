@@ -7,8 +7,8 @@ import {
     createHttpLink,
    } from '@apollo/client';
    import { setContext } from '@apollo/client/link/context';
-import Footer from "./components/Footer.jsx"
-import Header from './components/Header.jsx';
+import Footer from "./components/Footer/Footer.jsx"
+import Header from './components/Header/Header.jsx';
 import LoggedInHeader from './components/LoggedInHeader.jsx';
 import Auth from './utils/auth.js'
 
@@ -36,7 +36,7 @@ const App = () => {
     const userLoggedIn = Auth.loggedIn()
     return (
       <>
-      
+
           <div className ="fore">
             <ApolloProvider client={client}>
                 {userLoggedIn? (<LoggedInHeader />) : (<Header/>)}

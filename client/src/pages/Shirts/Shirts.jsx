@@ -47,7 +47,7 @@ const Shirts = () => {
         <p>Loading...</p>
       ) : (
         <div>
-          <h2>{data.getDesign.user?.username||'unknown user'}'s design</h2>
+          <h2>{data.getDesign.user?.username||'unknown user'}&#39;s design</h2>
           <img className="designPhoto" src={data.getDesign.image} alt="Design" />
           <img className="shirtPhoto"  src={shirtPhotos(formData)} alt="Shirt" />
           <form>

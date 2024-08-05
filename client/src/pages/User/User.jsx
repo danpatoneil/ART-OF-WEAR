@@ -26,12 +26,12 @@ const UserArtPage = () => {
         {data.getUser.designs.length ? (
 
     <div>
-    <h1>{data.getUser.username}'s ART of WEAR Gallery</h1>
+    <h1>{data.getUser.username}&#39;s Art of Wear Gallery</h1>
     {data.getUser.designs.map((design) => (
     <img src={design.image} data-index={design._id} key={design._id} onClick={toShirtPage} />
 ))}
   </div>
-        ) : <p>Looks like {data.getUser.username} doesn't have any designs available right now</p>}
+        ) : <p>Looks like {data.getUser.username} doesn&#39;t have any designs available right now</p>}
     </div>
   )}
             </div>
