@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_DESIGN } from "../utils/mutations"; // Import your ADD_DESIGN mutation
+import { ADD_DESIGN } from "../../utils/mutations"; // Import your ADD_DESIGN mutation
 
 export default function UploadWidget() {
 

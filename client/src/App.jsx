@@ -9,7 +9,7 @@ import {
    import { setContext } from '@apollo/client/link/context';
 import Footer from "./components/Footer/Footer.jsx"
 import Header from './components/Header/Header.jsx';
-import LoggedInHeader from './components/LoggedInHeader.jsx';
+import LoggedInHeader from './components/Header/LoggedInHeader.jsx';
 import Auth from './utils/auth.js'
 
 const httpLink = createHttpLink({
