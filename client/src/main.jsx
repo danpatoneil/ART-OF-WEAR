@@ -12,6 +12,8 @@ import Success from './pages/Success/Success.jsx';
 // import OrderHistory from
 import User from './pages/User/User.jsx'
 import NativeProfile from './pages/NativeProfile/NativeProfile.jsx';
+import NotFound from './pages/NotFound/NotFound.jsx';
+import NativeAccount from './pages/NativeAccount/NativeAccount.jsx';
 const router = createBrowserRouter([
     {
       path: '/',
@@ -45,8 +47,12 @@ const router = createBrowserRouter([
             element: <User />
           },
           {
-            path: '/User',
+            path: '/myArt',
             element: <NativeProfile />
+          },
+          {
+            path: '/myAccount',
+            element: <NativeAccount />
           },
       ],
     },

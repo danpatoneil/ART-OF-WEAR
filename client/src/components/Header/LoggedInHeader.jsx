@@ -22,8 +22,14 @@ const LoggedInHeader = () => {
           </li>
 
           <li>
-            <Link className="button" to="/User">
+            <Link className="button" to="/myArt">
               Your Posts
+            </Link>
+          </li>
+
+          <li>
+            <Link className="button" to="/myAccount">
+              Your Account
             </Link>
           </li>
           <li>
