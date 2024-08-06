@@ -1,39 +1,37 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { useState } from "react";
 import { GET_ME } from "../../utils/queries";
-import { UPDATE_USER, UPDATE_BANKING_INFO } from "../../utils/mutations";
+import { UPDATE_USER, UPDATE_BANKING_INFO, UPDATE_PASSWORD } from "../../utils/mutations";
 import "./NA.css";
 
 const NativeAccount = () => {
   // Define the GraphQL query to get user posts
   const { loading, error, data } = useQuery(GET_ME);
   const [formData, setFormData] = useState({ username: "", email: "" });
-  //   const [updateUser] = useMutation(UPDATE_USER, {
-  //     // update(cache, { data: { hideDesign } }) {
-  //     //   // Read the existing designs from the cache
-  //     //   const existingDesigns = cache.readQuery({ query: GET_USER_DESIGNS });
+    const [updateUser, {}] = useMutation(UPDATE_USER, {
+      // update(cache, { data: { hideDesign } }) {
+      //   // Read the existing designs from the cache
+      //   const existingDesigns = cache.readQuery({ query: GET_USER_DESIGNS });
 
-  //     //   // Update the cache by removing the deleted design
-  //     //   cache.writeQuery({
-  //     //     query: GET_USER_DESIGNS,
-  //     //     data: {
-  //     //       me: {
-  //     //         ...existingDesigns.me,
-  //     //         designs: existingDesigns.me.designs.filter(
-  //     //           (design) => design._id !== hideDesign._id
-  //     //         ),
-  //     //       },
-  //     //     },
-  //     //   });
-  //     // },
-  //     update(cache, {data: {updateUser}}) {
+      //   // Update the cache by removing the deleted design
+      //   cache.writeQuery({
+      //     query: GET_USER_DESIGNS,
+      //     data: {
+      //       me: {
+      //         ...existingDesigns.me,
+      //         designs: existingDesigns.me.designs.filter(
+      //           (design) => design._id !== hideDesign._id
+      //         ),
+      //       },
+      //     },
+      //   });
+      // },
+    });
 
-  //     }
-  //   });
+    const [updateBanking] = useMutation(UPDATE_BANKING_INFO, {
 
-  //   const [updateBanking] = useMutation(UPDATE_BANKING_INFO, {
 
-  //   });
+    });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
@@ -47,17 +45,18 @@ const NativeAccount = () => {
   //     const { data } = await hideDesign({ variables: { id: index } });
   //     console.log(data);
   //   };
-  const updateUser = async (e) => {
+  const handleUpdateUser = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    // console.log(formData);
+    // const {data} = await updateUser
   };
   const handleUpdate = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const updatePassword = async () => {
+  const handleUpdatePassword = async () => {
     console.log("updatePassword");
   };
-  const updateBanking = async () => {
+  const handleUpdateBanking = async () => {
     console.log("updateBanking");
   };
 //   console.log("this is me: ", me);
@@ -65,7 +64,7 @@ const NativeAccount = () => {
   return (
     <div>
       <h1>{me.username}&#39;s Account</h1>
-      <form onSubmit={updateUser}>
+      <form onSubmit={handleUpdateUser}>
         <label htmlFor="usernameInput">Username: </label>
         <br />
         <input
@@ -74,6 +73,7 @@ const NativeAccount = () => {
           placeholder={me.username}
           onChange={handleUpdate}
         />
+        <br />
         <br />
         <label htmlFor="emailInput">email: </label>
         <br />
@@ -85,11 +85,12 @@ const NativeAccount = () => {
           onChange={handleUpdate}
         />
         <br />
+        <br />
         <button>Update username and email</button>
       </form>
-      <button onClick={updatePassword}>Update Password</button>
-      <br />
-      <button onClick={updateBanking}>Update Banking Info</button>
+      <form><button onClick={handleUpdatePassword}>Update Password</button></form>
+      <form><button onClick={handleUpdateBanking}>Update Banking Info</button></form>
+
     </div>
   );
 };

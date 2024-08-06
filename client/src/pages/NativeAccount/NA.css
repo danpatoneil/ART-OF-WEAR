@@ -1,9 +1,12 @@
 form {
     text-align: center;
+    padding:12px;
 }
 
 button {
     text-align: center;
+    margin: 10px;
+    display: inline-block;
 }
 
 input {
@@ -12,4 +15,5 @@ input {
 
 label {
     text-align: center;
+    display: block;
 }

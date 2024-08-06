@@ -67,9 +67,10 @@ const typeDefs = `
     addUser(username:String!, email:String!, password:String!): Auth
     addDesign(image:String!): Design
     hideDesign(_id:ID!): Design
-    updateUser(username:String, email:String, password:String): User
+    updateUser(username:String!, email:String!): User
     updateBankingInfo(routingNumber:String!, accountNumber:String!): User
     updateOrder(input:[LineItemInput], status:String, _id:ID!): Order
+    updatePassword(password:String!): User
   }
 `;
 

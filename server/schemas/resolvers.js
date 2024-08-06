@@ -4,7 +4,7 @@
 
 const { User, Design, Order } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const stripe = require("stripe")("sk_test_4eC39HqLyjWDarjtT1zdp7dc");
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
@@ -23,38 +23,37 @@ const resolvers = {
         const user = await User.findOne({
           _id: context.user._id,
         })
-        .populate({
-          path: 'orders',
-          populate: {
-            path: 'lineItems',
+          .populate({
+            path: "orders",
             populate: {
-              path: 'design'
-            }
-          }
-        })
-        .populate('designs');
+              path: "lineItems",
+              populate: {
+                path: "design",
+              },
+            },
+          })
+          .populate("designs");
         return user;
       } else {
         throw AuthenticationError;
       }
     },
     //returns the most recent designs up to a limit passed into the function
-    getDesigns: async (parent, {start}) => {
-        const designs = await Design.find({ hidden: false })
-                                .populate('user')
-                                .sort({ createdAt: -1 })
-                                .skip(start)
-                                .limit(20);
-        return designs;
+    getDesigns: async (parent, { start }) => {
+      const designs = await Design.find({ hidden: false })
+        .populate("user")
+        .sort({ createdAt: -1 })
+        .skip(start)
+        .limit(20);
+      return designs;
     },
     //returns all the designs of a single user other than the logged in user by ID
     getUser: async (parent, { _id }) => {
       const user = await User.findOne({
         _id,
-      })
-      .populate({
+      }).populate({
         path: "designs",
-        match: { hidden: false } // Filter designs where hidden is false
+        match: { hidden: false }, // Filter designs where hidden is false
       });
       if (!user) throw new Error("User ID not found");
       return user;
@@ -66,52 +65,55 @@ const resolvers = {
       return design;
     },
 
-    checkout: async (parent, {items}, context) => {
-        //save cart state in session storage
-        const url = new URL(context.headers.referer).origin;
-        // eslint-disable-next-line camelcase
-        const line_items = [];
-        // eslint-disable-next-line no-restricted-syntax
-        for (const product of items) {
-            // const design = await Design.findById(product.design);
-          const  name = `${product.item}_${product.design}`
-          const  description = `${product.item}_${product.cut}_${product.size}_${product.color}`
-          line_items.push({
-            price_data: {
-              currency: 'usd',
-              product_data: {
-                name,
-                description,
-                images: [product.image]
-              },
-              unit_amount: product.price * 100,
+    checkout: async (parent, { items }, context) => {
+      //save cart state in session storage
+      const url = new URL(context.headers.referer).origin;
+      // eslint-disable-next-line camelcase
+      const line_items = [];
+      // eslint-disable-next-line no-restricted-syntax
+      for (const product of items) {
+        // const design = await Design.findById(product.design);
+        const name = `${product.item}_${product.design}`;
+        const description = `${product.item}_${product.cut}_${product.size}_${product.color}`;
+        line_items.push({
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name,
+              description,
+              images: [product.image],
             },
-            quantity: product.quantity,
-          });
-        }
+            unit_amount: product.price * 100,
+          },
+          quantity: product.quantity,
+        });
+      }
 
-        try {
-            // console.log("trycatch block started")
-            //create a new order
-            const order = await Order.create({user:context.user._id, lineItems:items})
-            //push that order onto the logged in user
-            await User.findByIdAndUpdate(context.user._id, { $push: { orders: order._id } });
-            const session = await stripe.checkout.sessions.create({
-              payment_method_types: ['card'],
-              line_items,
-              mode: 'payment',
-              success_url: `${url}/success?order_id=${order._id}`,
-              cancel_url: `${url}/`,
-            });
-            //in success page, wipe cart and updateOrder(order._id, 'Received')
-            // console.log(session)
-            // console.log(order)
+      try {
+        // console.log("trycatch block started")
+        //create a new order
+        const order = await Order.create({
+          user: context.user._id,
+          lineItems: items,
+        });
+        //push that order onto the logged in user
+        await User.findByIdAndUpdate(context.user._id, {
+          $push: { orders: order._id },
+        });
+        const session = await stripe.checkout.sessions.create({
+          payment_method_types: ["card"],
+          line_items,
+          mode: "payment",
+          success_url: `${url}/success?order_id=${order._id}`,
+          cancel_url: `${url}/`,
+        });
+        //in success page, wipe cart and updateOrder(order._id, 'Received')
+        // console.log(session)
+        // console.log(order)
         return { session: session.id };
-        } catch (error) {
-            console.error(error)
-        }
-
-
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
   Mutation: {
@@ -145,23 +147,23 @@ const resolvers = {
 
     //create a new design, image is a string that points to the user's image they are uploading
     addDesign: async (parent, { image }, context) => {
-        console.log(image)
+      console.log(image);
       if (context.user) {
         //find logged in user
         const user = await User.findOne({
           _id: context.user._id,
         });
         try {
-              //create new design under logged in user
-                const design = await Design.create({user, image});
-              //push new design into user's array
-                user.designs.push(design);
-              //save user
-                await user.save();
-              //return design
-                return design;
+          //create new design under logged in user
+          const design = await Design.create({ user, image });
+          //push new design into user's array
+          user.designs.push(design);
+          //save user
+          await user.save();
+          //return design
+          return design;
         } catch (error) {
-            console.error(error)
+          console.error(error);
         }
       } else {
         throw AuthenticationError;
@@ -191,21 +193,29 @@ const resolvers = {
       }
     },
 
-    //updates a user's username, email, and password, whichever are passed
-    updateUser: async (parent, { username, email, password }, context) => {
-        console.log("username is : ", context.user.username)
+    //updates a user's username and email
+    updateUser: async (parent, { username, email }, context) => {
       if (context.user) {
-        console.log("username is : ", context.user._id)
+        console.log('this is the passed username: ', username);
+        console.log('this is the passed email: ', email);
+        const user = await User.findOneAndUpdate({ _id: context.user._id }, {username, email}, {new: true});
+        return user;
+      } else {
+        throw AuthenticationError;
+      }
+    },
+
+    //updates a user's password
+    updatePassword: async (parent, { password }, context) => {
+      if (context.user) {
         const user = await User.findOne({ _id: context.user._id });
-        if (username) user.username = username;
-        if (email) user.email = email;
-        if (password) user.password = password;
-        try {
-          await user.save();
-          return user;
-        } catch (error) {
-          console.error(error);
+        const correctPassword = await user.isCorrectPassword(password);
+        if (!correctPassword) {
+          console.log('gaming: ', password)
+          user.password = password;
+          await user.save()
         }
+        return user;
       } else {
         throw AuthenticationError;
       }
@@ -231,14 +241,15 @@ const resolvers = {
     updateOrder: async (parent, { input, status, _id }, context) => {
       if (context.user) {
         //grab user
-        const order = await Order.findById(_id)
-        if(!order) throw new Error('Order not found')
-        if(order.user.toString() !== context.user._id) throw new Error("cannot alter another user's order!")
+        const order = await Order.findById(_id);
+        if (!order) throw new Error("Order not found");
+        if (order.user.toString() !== context.user._id)
+          throw new Error("cannot alter another user's order!");
         const updatedOrder = await Order.findOneAndUpdate(
           { _id },
           { lineItems: input, status },
           { new: true, runValidators: true }
-        ).populate('user');
+        ).populate("user");
         return updatedOrder;
       } else {
         throw AuthenticationError;
