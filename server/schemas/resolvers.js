@@ -206,15 +206,15 @@ const resolvers = {
     },
 
     //updates a user's password
-    updatePassword: async (parent, { password }, context) => {
+    updatePassword: async (parent, { currentPassword, newPassword }, context) => {
       if (context.user) {
         const user = await User.findOne({ _id: context.user._id });
-        const correctPassword = await user.isCorrectPassword(password);
+        const correctPassword = await user.isCorrectPassword(currentPassword);
         if (!correctPassword) {
-          console.log('gaming: ', password)
-          user.password = password;
-          await user.save()
+            throw new Error("current password was not correct");
         }
+        user.password = newPassword;
+        await user.save()
         return user;
       } else {
         throw AuthenticationError;

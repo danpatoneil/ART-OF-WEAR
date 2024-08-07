@@ -70,7 +70,7 @@ const typeDefs = `
     updateUser(username:String!, email:String!): User
     updateBankingInfo(routingNumber:String!, accountNumber:String!): User
     updateOrder(input:[LineItemInput], status:String, _id:ID!): Order
-    updatePassword(password:String!): User
+    updatePassword(currentPassword:String!, newPassword:String!): User
   }
 `;
 

@@ -1,19 +1,21 @@
-form {
-    text-align: center;
-    padding:12px;
+.center {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
-button {
-    text-align: center;
-    margin: 10px;
-    display: inline-block;
+.center *{
+    margin: 5px;
 }
 
-input {
-    text-align: center;
-}
+.popup {
+    background-color: black;
+    width: 400px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 
-label {
-    text-align: center;
-    display: block;
 }

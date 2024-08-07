@@ -41,8 +41,8 @@ mutation HideDesign($id: ID!) {
 }
 `;
 export const UPDATE_USER = gql`
-mutation UpdateUser($updateUserUsername2: String!, $updateUserEmail2: String!) {
-  updateUser(username: $updateUserUsername2, email: $updateUserEmail2) {
+mutation UpdateUser($username: String!, $email: String!) {
+  updateUser(username: $username, email: $email) {
     _id
   }
 }
@@ -75,8 +75,8 @@ export const REGISTER_USER = gql`
   }`;
 
 export const UPDATE_PASSWORD = gql`
-mutation UpdatePassword($password: String!) {
-  updatePassword(password: $password) {
+mutation UpdatePassword($currentPassword: String!, $newPassword: String!) {
+  updatePassword(currentPassword: $currentPassword, newPassword: $newPassword) {
     _id
   }
 }
