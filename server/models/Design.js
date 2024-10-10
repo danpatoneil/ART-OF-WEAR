@@ -19,7 +19,10 @@ const DesignSchema = new Schema({
   hidden: {
     type: Boolean,
     default: false
-  }
+  },
+  tags:[{
+    type: String
+  }]
 });
 
 const Design = mongoose.model('Design', DesignSchema);

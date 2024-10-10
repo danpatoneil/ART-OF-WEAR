@@ -13,7 +13,12 @@ const NativeAccount = () => {
   // Define the GraphQL query to get user posts
   const { loading, error, data } = useQuery(GET_ME);
   const [formData, setFormData] = useState({ username: "", email: "" });
-  const [pwFormData, setPwFormData] = useState({ currentPassword, newPassword, confirmPassword });
+  const [pwFormData, setPwFormData] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+    error: ''
+  });
   useEffect(() => {
     if (!loading)
       setFormData({ username: data.me.username, email: data.me.email });
@@ -21,26 +26,39 @@ const NativeAccount = () => {
   const [updateUser] = useMutation(UPDATE_USER);
   const [updateBanking] = useMutation(UPDATE_BANKING_INFO);
   const [updatePassword] = useMutation(UPDATE_PASSWORD);
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
   let me;
   if (data.me) {
     me = data.me;
   }
-  const handleUpdateUser = async (e) => {
+  const handleUserSubmit = async (e) => {
     e.preventDefault();
     const data = await updateUser({ variables: formData });
     if (data) window.location.assign("/myAccount");
   };
-  const handleUpdate = async (e) => {
+  const handleUserUpdate = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  const handleUpdatePassword = async (e) => {
+  const handlePWUpdate = async (e) => {
+    setPwFormData({ ...pwFormData, [e.target.name]: e.target.value, error: '' });
+  };
+  const handleBankingUpdate = async (e) => {
+    // setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+  const handlePasswordSubmit = async (e) => {
     e.preventDefault();
+    console.log(pwFormData);
+    if (pwFormData.newPassword == pwFormData.confirmPassword) {
+      console.log("passwords match");
+      console.log(pwFormData)
+    } else {
+        console.log('passwords do not match')
+        setPwFormData({ ...pwFormData, error: 'Your new passwords do not match, one of them might be entered incorrectly'})
+    };
     // await updatePassword({variables: formData})
   };
-  const handleUpdateBanking = async (e) => {
+  const handleBankingSubmit = async (e) => {
     e.preventDefault();
     // await updateUser({variables: formData})
   };
@@ -49,25 +67,25 @@ const NativeAccount = () => {
     <div>
       <h1>{me.username}&#39;s Account</h1>
       <div className="center">
-        <form onSubmit={handleUpdateUser}>
-          <label htmlFor="usernameInput">Username: </label>
+        <form onSubmit={handleUserSubmit}>
+          <label htmlFor="usernameInput">Username</label>
           <br />
           <input
             type="text"
             name="username"
             placeholder={me.username}
-            onChange={handleUpdate}
+            onChange={handleUserUpdate}
           />
           <br />
           <br />
-          <label htmlFor="emailInput">email: </label>
+          <label htmlFor="emailInput">email</label>
           <br />
           <input
             type="email"
             name="email"
             id="emailInput"
             placeholder={me.email}
-            onChange={handleUpdate}
+            onChange={handleUserUpdate}
           />
           <br />
           <br />
@@ -76,19 +94,67 @@ const NativeAccount = () => {
 
         <Popup
           trigger={
-            <button onClick={handleUpdatePassword}>Update Password</button>
+            <button onClick={handlePasswordSubmit}>Update Password</button>
           }
           position="top"
         >
           <div className="popup">
-            <form>
-                <label htmlFor="password">Enter your new password</label>
+            <div className="center">
+            <form onSubmit={handlePasswordSubmit}>
+              <table>
+                <tr>
+                  <td>
+                    <label htmlFor="currentPassword">
+                      Enter your current password{" "}
+                    </label>
+                  </td>
+                  <td>
+                    <input
+                      type="password"
+                      name="currentPassword"
+                      onChange={handlePWUpdate}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label htmlFor="newPassword">
+                      Enter your new password{" "}
+                    </label>
+                  </td>
+                  <td>
+                    <input
+                      type="password"
+                      name="newPassword"
+                      onChange={handlePWUpdate}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label htmlFor="confirmPassword">
+                      Confirm your new password{" "}
+                    </label>
+                  </td>
+                  <td>
+                    <input
+                      type="password"
+                      name="confirmPassword"
+                      onChange={handlePWUpdate}
+                    />
+                  </td>
+                </tr>
+              </table>
+                <div className="center">
+                    <button>Submit Password Update</button>
+                </div>
+                {pwFormData.error}
             </form>
+            </div>
           </div>
-
         </Popup>
         <form>
-          <button onClick={handleUpdateBanking}>Update Banking Info</button>
+          <button onClick={handleBankingSubmit}>Update Banking Info</button>
         </form>
       </div>
     </div>

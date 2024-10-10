@@ -13,6 +13,7 @@ const typeDefs = `
     image: String
     createdAt: Float
     hidden: Boolean
+    tags: [String]
   }
 
   type LineItem {
@@ -65,7 +66,7 @@ const typeDefs = `
   type Mutation {
     login(email:String!, password:String!): Auth
     addUser(username:String!, email:String!, password:String!): Auth
-    addDesign(image:String!): Design
+    addDesign(image:String!, tags:[String]): Design
     hideDesign(_id:ID!): Design
     updateUser(username:String!, email:String!): User
     updateBankingInfo(routingNumber:String!, accountNumber:String!): User

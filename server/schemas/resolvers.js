@@ -146,16 +146,19 @@ const resolvers = {
     },
 
     //create a new design, image is a string that points to the user's image they are uploading
-    addDesign: async (parent, { image }, context) => {
-      console.log(image);
+    addDesign: async (parent, { image, tags }, context) => {
+    //   console.log(image);
+    //   console.log(tags);
       if (context.user) {
         //find logged in user
         const user = await User.findOne({
           _id: context.user._id,
         });
         try {
+          //check that there are at least 3 tags
+          if(tags.length<3) throw new Error("You must have at least 3 tags");
           //create new design under logged in user
-          const design = await Design.create({ user, image });
+          const design = await Design.create({ user, image, tags });
           //push new design into user's array
           user.designs.push(design);
           //save user
@@ -196,9 +199,13 @@ const resolvers = {
     //updates a user's username and email
     updateUser: async (parent, { username, email }, context) => {
       if (context.user) {
-        console.log('this is the passed username: ', username);
-        console.log('this is the passed email: ', email);
-        const user = await User.findOneAndUpdate({ _id: context.user._id }, {username, email}, {new: true});
+        // console.log('this is the passed username: ', username);
+        // console.log('this is the passed email: ', email);
+        const user = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          { username, email },
+          { new: true }
+        );
         return user;
       } else {
         throw AuthenticationError;
@@ -206,18 +213,33 @@ const resolvers = {
     },
 
     //updates a user's password
-    updatePassword: async (parent, { currentPassword, newPassword }, context) => {
-      if (context.user) {
-        const user = await User.findOne({ _id: context.user._id });
-        const correctPassword = await user.isCorrectPassword(currentPassword);
-        if (!correctPassword) {
+    updatePassword: async (
+      parent,
+      { currentPassword, newPassword },
+      context
+    ) => {
+      try {
+        if (context.user) {
+        //   console.log(currentPassword, "is the current password");
+        //   console.log(newPassword, "is the new password");
+          const user = await User.findOne({ _id: context.user._id });
+          //check if the current password is correct
+          const correctPassword = await user.isCorrectPassword(currentPassword);
+          if (!correctPassword) {
+            //if not, throw an error
+            // console.log("the password was incorrect");
             throw new Error("current password was not correct");
+          }
+          //if so, set user's password to the new password, save (which will trigger the hashing), and return the user
+        //   console.log('password was right, new password should be ', newPassword)
+          user.password = newPassword;
+          await user.save();
+          return user;
+        } else {
+          throw AuthenticationError;
         }
-        user.password = newPassword;
-        await user.save()
-        return user;
-      } else {
-        throw AuthenticationError;
+      } catch (error) {
+        console.error(error);
       }
     },
     //requires a routing number and an account number, sets the routing and accounting numbers of the logged in user to them
